@@ -1,0 +1,24 @@
+POST http://localhost:8000/auth/convert-token
+Content-Type: application/json
+
+{
+    "grant_type": "convert_token",
+    "client_id": "fE47dp9OT7H7ysNExlNqKJqsZekee40FP0vnvShK",
+    "client_secret": "mUkOFVUTKspBgxv0PMHEZF2cHkRDfZYwEhvY9DjnsLBSMUkj1PI0ojWDVRjEvtADqcwwm69TFpF5pS90u6pK2atsTiRWamkGseNFNaFnGvlLttJyztjQ3xUfMGGy604L",
+    "backend": "google-oauth2",
+    "token": "ya29.A0ARrdaM_0nZy37hwuCrmZ9jVHoiayCv9lEq6x6OSnQxh11V7eeHOh0J6CW7wSXvVIFEEDvKIXtK3k-hnsGkevRp5EFKMYn12jWOT39FK6125QMcQCQQFham0hskcyFbIl63i7iPg1cMBDAmmT9eds01xOV2np9Xc",
+}
+
+
+###
+
+POST http://localhost:8000/auth/token
+Content-Type: application/json
+
+{
+    "grant_type":"password",
+    "client_id": "fE47dp9OT7H7ysNExlNqKJqsZekee40FP0vnvShK",
+    "client_secret": "mUkOFVUTKspBgxv0PMHEZF2cHkRDfZYwEhvY9DjnsLBSMUkj1PI0ojWDVRjEvtADqcwwm69TFpF5pS90u6pK2atsTiRWamkGseNFNaFnGvlLttJyztjQ3xUfMGGy604L",
+    "username": "a@a.com", 
+    "password": "admin"
+}

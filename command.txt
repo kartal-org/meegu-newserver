@@ -1,0 +1,14 @@
+curl -X POST -d "client_id=fE47dp9OT7H7ysNExlNqKJqsZekee40FP0vnvShK&client_secret=mUkOFVUTKspBgxv0PMHEZF2cHkRDfZYwEhvY9DjnsLBSMUkj1PI0ojWDVRjEvtADqcwwm69TFpF5pS90u6pK2atsTiRWamkGseNFNaFnGvlLttJyztjQ3xUfMGGy604L&grant_type=password&username=a@a.com&password=admin" http://localhost:8000/auth/token
+
+curl -X POST -d "grant_type=convert_token&client_id=fE47dp9OT7H7ysNExlNqKJqsZekee40FP0vnvShK&client_secret=mUkOFVUTKspBgxv0PMHEZF2cHkRDfZYwEhvY9DjnsLBSMUkj1PI0ojWDVRjEvtADqcwwm69TFpF5pS90u6pK2atsTiRWamkGseNFNaFnGvlLttJyztjQ3xUfMGGy604L&backend=google-oauth2&token=ya29.A0ARrdaM9DGVvM7Mw96QGvpY865uFezYfScKWb-z7P6I6sgRhLVGhnFi4qhBRRoyAJH5BuxZDanBlKvFUb5MJPYOUWScpx0WDu63AIMS2H5ILrppXgA-RRrBHlezKsTFxX_2C75IArdGbrYxNqCBF25_T2yBcYW6w " http://localhost:8000/auth/convert-token
+
+
+
+ya29.A0ARrdaM9cAELgRw_BgikJYcdHSW_SJOOOWoMRL7VViUVLdJNMOsZ-EgUv8fnm9Y0WAmexzHT_b2_uPwz
+
+
+###
+
+# GET http://localhost:8000/users/3
+# Content-Type: application/json
+# Authorization: 'Bearer ' 
