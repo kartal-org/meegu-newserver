@@ -24,11 +24,15 @@ class WorkspaceList(generics.ListCreateAPIView):
 
         # Filters workspace based on isOwner
         isOwner = self.request.query_params.get("isOwner")
+        isAdviser = self.request.query_params.get("isAdviser")
+
         if isOwner is not None:
             if isOwner:
                 queryset = queryset.filter(creator=user)
             else:
                 queryset = queryset.exclude(creator=user)
+        if isAdviser is not None:
+            queryset = Workspace.activeWorkspaces.filter(adviser=user)
         print(queryset)
         return queryset
 
