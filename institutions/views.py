@@ -4,7 +4,7 @@ from .serializers import *
 
 
 class InstitutionList(generics.ListCreateAPIView):
-    permission_classes = [permissions.IsAuthenticated]
+    # permission_classes = [permissions.IsAuthenticated]
     serializer_class = InstitutionSerializer
 
     def get_queryset(self):
@@ -12,18 +12,24 @@ class InstitutionList(generics.ListCreateAPIView):
         Institution query Filters
         """
 
-        user = self.request.user
-        verification = self.request.query_params.get('is_verified')
-        isActive = self.request.query_params.get('isActive')
+        # user = self.request.user
+        verification = self.request.query_params.get("is_verified")
+        isActive = self.request.query_params.get("isActive")
+        isStaff = self.request.query_params.get("isStaff")
 
         queryset = Institution.active.all()
 
-        if user is not None:
-            queryset = queryset.filter(creator=user)
+        # if user is not None:
+        #     queryset = queryset.filter(creator=user)
         if verification is not None:
             queryset = queryset.filter(is_verified=verification)
-        if isActive is not None:
+        if isActive:
             queryset = Institution.objects.filter(isActive=False)
+
+        if isStaff:
+            usermembership = Member.objects.filter(user__id=10)
+
+            queryset = queryset.filter(pk__in=usermembership)
 
         return queryset
 
@@ -43,8 +49,8 @@ class DepartmentList(generics.ListCreateAPIView):
         Department query Filters
         """
 
-        institution = self.request.query_params.get('institution')
-        archive = self.request.query_params.get('archive')
+        institution = self.request.query_params.get("institution")
+        archive = self.request.query_params.get("archive")
 
         queryset = Department.active.all()
 
@@ -71,8 +77,8 @@ class MemberList(generics.ListCreateAPIView):
         Member query Filters
         """
 
-        institution = self.request.query_params.get('institution')
-        isActive = self.request.query_params.get('isActive')
+        institution = self.request.query_params.get("institution")
+        isActive = self.request.query_params.get("isActive")
 
         queryset = Member.active.all()
 
