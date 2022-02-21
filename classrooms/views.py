@@ -14,7 +14,7 @@ class RecommendationList(generics.ListCreateAPIView):
         """
         # Default filter based on ownership
         user = self.request.user
-        archive = self.request.query_params.get('archive')
+        archive = self.request.query_params.get("archive")
         queryset = Recommendation.active.filter(adviser=user)
 
         if archive:
@@ -43,8 +43,8 @@ class CommentList(generics.ListCreateAPIView):
         Comment query Filters
         """
 
-        archive = self.request.query_params.get('archive')
-        file = self.request.query_params.get('file')
+        archive = self.request.query_params.get("archive")
+        file = self.request.query_params.get("file")
         queryset = Comment.active.all()
 
         if file is not None:
@@ -76,7 +76,7 @@ class ReplyList(generics.ListCreateAPIView):
         Reply query Filters
         """
 
-        archive = self.request.query_params.get('archive')
+        archive = self.request.query_params.get("archive")
 
         queryset = Reply.active.all()
 

@@ -13,6 +13,7 @@ https://docs.djangoproject.com/en/4.0/ref/settings/
 from pathlib import Path
 from datetime import timedelta
 import environ
+from oauth2_provider import settings as oauth2_settings
 
 
 # Initialise environment variables
@@ -223,3 +224,5 @@ CLOUDINARY_STORAGE = {
     "API_KEY": env("CLOUDINARY_API_KEY"),
     "API_SECRET": env("CLOUDINARY_SECRET_KEY"),
 }
+
+oauth2_settings.DEFAULTS["ACCESS_TOKEN_EXPIRE_SECONDS"] = 604800

@@ -6,6 +6,7 @@ from .serializers import AccountSerializer
 from rest_framework.parsers import MultiPartParser, FormParser
 from rest_framework import filters
 from django.db.models import Q
+from .renderers import CustomRenderer
 
 
 class AccountList(generics.ListCreateAPIView):
@@ -13,6 +14,7 @@ class AccountList(generics.ListCreateAPIView):
     parser_classes = [MultiPartParser, FormParser]
     queryset = Account.objects.all()
     serializer_class = AccountSerializer
+    renderer_classes = [CustomRenderer]
 
     def get_queryset(self):
         queryset = Account.objects.all()

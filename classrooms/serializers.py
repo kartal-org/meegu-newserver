@@ -4,17 +4,15 @@ from accounts.serializers import AccountSerializer
 
 
 class RecommendationSerializer(serializers.ModelSerializer):
-
     class Meta:
         model = Recommendation
-        fields = '__all__'
+        fields = "__all__"
 
 
 class ReplySerializer(serializers.ModelSerializer):
-
     class Meta:
         model = Reply
-        fields = '__all__'
+        fields = "__all__"
 
     pass
 
@@ -24,9 +22,11 @@ class CommentSerializer(serializers.ModelSerializer):
 
     class Meta:
         model = Comment
-        fields = '__all__'
+
+        fields = "__all__"
 
     def to_representation(self, instance):
         response = super().to_representation(instance)
         response["author"] = AccountSerializer(instance.author).data
+
         return response
