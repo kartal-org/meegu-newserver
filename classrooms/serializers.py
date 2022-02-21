@@ -22,6 +22,7 @@ class CommentSerializer(serializers.ModelSerializer):
 
     class Meta:
         model = Comment
+
         fields = "__all__"
 
     def to_representation(self, instance):
