@@ -9,6 +9,10 @@ from django.dispatch import receiver
 # Create your models here.
 
 
+def upload_to(instance, filename):
+    return "pdf/{filename}".format(filename=filename)
+
+
 class Article(models.Model):
     options = [
         ("published", "Published"),
@@ -21,6 +25,7 @@ class Article(models.Model):
     status = models.CharField(max_length=20)
     recommendation = models.ForeignKey(Recommendation, on_delete=models.SET_NULL, null=True, blank=True)
     institution = models.ForeignKey(Institution, on_delete=models.CASCADE)
+    pdf = models.FileField(upload_to=upload_to, null=True, blank=True)
     citation = models.TextField(blank=True, null=True)
     department = models.ForeignKey(Department, on_delete=models.SET_NULL, null=True, blank=True)
     dateCreated = models.DateTimeField(auto_now_add=True)
@@ -62,8 +67,14 @@ class Review(models.Model):
 @receiver(post_save, sender=Article)
 def add_article_size(created, instance, *args, **kwargs):
 
-    fileSize = instance.recommendation.file.pdf.size
-    print(fileSize)
-    institution = Institution.objects.get(pk=instance.id)
-    institution.storageUsed = institution.storageUsed + fileSize
-    institution.save()
+    if instance.recommendation:
+        fileSize = instance.recommendation.file.pdf.size
+        print(fileSize)
+        institution = Institution.objects.get(pk=instance.id)
+        institution.storageUsed = institution.storageUsed + fileSize
+        institution.save()
+    if instance.pdf:
+        fileSize = instance.pdf.size
+        institution = Institution.objects.get(pk=instance.id)
+        institution.storageUsed = institution.storageUsed + fileSize
+        institution.save()
