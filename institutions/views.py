@@ -29,8 +29,12 @@ class InstitutionList(generics.ListCreateAPIView):
         if isStaff:
             # breakpoint()
             usermembership = Member.objects.filter(user__id=user.id)
+            institutionIDs = []
 
-            queryset = Institution.active.filter(pk__in=usermembership)
+            for x in usermembership:
+                institutionIDs.append(x.institution.id)
+
+            queryset = Institution.active.filter(pk__in=institutionIDs)
         # print(user.id)
         return queryset
 
