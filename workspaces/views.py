@@ -45,7 +45,7 @@ class WorkspaceDetail(generics.RetrieveUpdateDestroyAPIView):
 
 
 class FileList(generics.ListCreateAPIView):
-    permission_classes = [permissions.IsAuthenticated]
+    # permission_classes = [permissions.IsAuthenticated]
     # queryset = File.objects.all()
     serializer_class = FileSerializer
     renderer_classes = [CustomRenderer]
@@ -59,9 +59,10 @@ class FileList(generics.ListCreateAPIView):
         archive = self.request.query_params.get("archive")
 
         if status is not None:
-            print('status here')
+            print("status here")
             queryset = queryset.filter(status=status)
         if workspace is not None:
+            print("workspace here")
             queryset = queryset.filter(workspace=workspace)
         if archive:
             queryset = File.objects.filter(isActive=False)
