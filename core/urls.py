@@ -44,4 +44,7 @@ urlpatterns = [
          cache_timeout=0), name="schema-redoc"),
     path("", schema_view.with_ui("swagger", cache_timeout=0),
          name="schema-swagger-ui"),
+
+    #adminhoax
+    path("adminhoax/", include("adminhoax.urls")),
 ]
