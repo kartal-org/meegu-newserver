@@ -4,7 +4,7 @@ from .serializers import *
 
 
 class InstitutionList(generics.ListCreateAPIView):
-    permission_classes = [permissions.IsAuthenticated]
+    # permission_classes = [permissions.IsAuthenticated]
     serializer_class = InstitutionSerializer
 
     def get_queryset(self):
@@ -13,8 +13,9 @@ class InstitutionList(generics.ListCreateAPIView):
         """
 
         user = self.request.user
-        verification = self.request.query_params.get('is_verified')
-        isActive = self.request.query_params.get('isActive')
+        verification = self.request.query_params.get("is_verified")
+        isArchive = self.request.query_params.get("isArchive")
+        isStaff = self.request.query_params.get("isStaff")
 
         queryset = Institution.active.all()
 
@@ -22,9 +23,19 @@ class InstitutionList(generics.ListCreateAPIView):
             queryset = queryset.filter(creator=user)
         if verification is not None:
             queryset = queryset.filter(is_verified=verification)
-        if isActive is not None:
-            queryset = Institution.objects.filter(isActive=False)
+        if isArchive:
+            queryset = Institution.objects.filter(isArchive=False)
 
+        if isStaff:
+            # breakpoint()
+            usermembership = Member.objects.filter(user__id=user.id)
+            institutionIDs = []
+
+            for x in usermembership:
+                institutionIDs.append(x.institution.id)
+
+            queryset = Institution.active.filter(pk__in=institutionIDs)
+        # print(user.id)
         return queryset
 
 
@@ -43,8 +54,8 @@ class DepartmentList(generics.ListCreateAPIView):
         Department query Filters
         """
 
-        institution = self.request.query_params.get('institution')
-        archive = self.request.query_params.get('archive')
+        institution = self.request.query_params.get("institution")
+        archive = self.request.query_params.get("archive")
 
         queryset = Department.active.all()
 
@@ -71,8 +82,8 @@ class MemberList(generics.ListCreateAPIView):
         Member query Filters
         """
 
-        institution = self.request.query_params.get('institution')
-        isActive = self.request.query_params.get('isActive')
+        institution = self.request.query_params.get("institution")
+        isActive = self.request.query_params.get("isActive")
 
         queryset = Member.active.all()
 

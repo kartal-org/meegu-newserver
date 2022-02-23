@@ -14,6 +14,7 @@ import os
 from pathlib import Path
 from datetime import timedelta
 import environ
+from oauth2_provider import settings as oauth2_settings
 
 
 # Initialise environment variables
@@ -173,8 +174,8 @@ REST_FRAMEWORK = {
 }
 
 SIMPLE_JWT = {
-    "ACCESS_TOKEN_LIFETIME": timedelta(days=2),
-    "REFRESH_TOKEN_LIFETIME": timedelta(days=7),
+    "ACCESS_TOKEN_LIFETIME": timedelta(days=7),
+    "REFRESH_TOKEN_LIFETIME": timedelta(days=14),
 }
 
 AUTHENTICATION_BACKENDS = (
@@ -237,3 +238,6 @@ CLOUDINARY_STORAGE = {
     "API_KEY": env("CLOUDINARY_API_KEY"),
     "API_SECRET": env("CLOUDINARY_SECRET_KEY"),
 }
+
+oauth2_settings.DEFAULTS["ACCESS_TOKEN_EXPIRE_SECONDS"] = 604800
+DATA_UPLOAD_MAX_MEMORY_SIZE = 5242880

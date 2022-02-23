@@ -18,12 +18,8 @@ class Institution(models.Model):
     name = models.CharField(max_length=255, unique=True)
     contact = models.CharField(max_length=20, unique=True)
     address = models.TextField()
-    profileImage = models.ImageField(
-        _("Institution Profile Image"), upload_to=upload_to, blank=True, null=True
-    )
-    profileCover = models.ImageField(
-        _("Institution Profile Cover"), upload_to=upload_to,  blank=True, null=True
-    )
+    profileImage = models.ImageField(_("Institution Profile Image"), upload_to=upload_to, blank=True, null=True)
+    profileCover = models.ImageField(_("Institution Profile Cover"), upload_to=upload_to, blank=True, null=True)
     about = models.TextField(_("about"), max_length=500, blank=True)
     email = models.EmailField()
     creator = models.ForeignKey(Account, on_delete=models.CASCADE)
@@ -54,8 +50,7 @@ class Verification(models.Model):
     )
 
     institution = models.OneToOneField(Institution, on_delete=models.CASCADE)
-    status = models.CharField(
-        max_length=20, choices=options, default="pending")
+    status = models.CharField(max_length=20, choices=options, default="pending")
     document = models.FileField(upload_to=upload_verification)
     dateCreated = models.DateTimeField(auto_now_add=True)
     dateModified = models.DateTimeField(auto_now=True)
@@ -78,8 +73,7 @@ def apply_verification_handler(created, instance, *args, **kwargs):
 
 class Department(models.Model):
     name = models.CharField(max_length=255)
-    logo = models.ImageField(_("Department-Logo"),
-                             upload_to=upload_to,  blank=True, null=True)
+    logo = models.ImageField(_("Department-Logo"), upload_to=upload_to, blank=True, null=True)
     institution = models.ForeignKey(Institution, on_delete=models.CASCADE)
     isActive = models.BooleanField(default=True)
     dateCreated = models.DateTimeField(auto_now_add=True)
@@ -98,10 +92,13 @@ class Department(models.Model):
 
 class Member(models.Model):
     user = models.ForeignKey(Account, on_delete=models.CASCADE)
-    instance = models.ForeignKey(Institution, on_delete=models.CASCADE)
+    institution = models.ForeignKey(Institution, on_delete=models.CASCADE)
     isActive = models.BooleanField(default=True)
     dateCreated = models.DateTimeField(auto_now_add=True)
     dateUpdated = models.DateTimeField(auto_now=True)
+
+    class Meta:
+        unique_together = ["user", "institution"]
 
     class ActiveMembersManager(models.Manager):
         def get_queryset(self):

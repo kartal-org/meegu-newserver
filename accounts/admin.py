@@ -10,20 +10,14 @@ class UserAdminConfig(UserAdmin):
     model = Account
     search_fields = ("email", "username", "first_name", "last_name")
     list_filter = ("email", "username", "first_name", "last_name", "type", "is_active", "is_staff")
+
     ordering = ("-dateUpdated",)
-    list_display = ("id", "email", "username", "first_name", "last_name", "type","is_active", "is_staff")
+    list_display = ("id", "email", "username", "first_name", "last_name", "type", "is_active", "is_staff")
     fieldsets = (
         (None, {"fields": ("email", "username", "first_name", "last_name")}),
         (
             "Permissions",
-            {
-                "fields": (
-                    "type",
-                    "is_staff",
-                    "is_active",
-                    "is_verified",
-                )
-            },
+            {"fields": ("type", "is_staff", "is_active", "is_verified")},
         ),
         (
             "Personal",
@@ -33,6 +27,16 @@ class UserAdminConfig(UserAdmin):
                     "profileImage",
                     "profileCover",
                 )
+            },
+        ),
+        (
+            "Group Permissions",
+            {
+                "classes": ("collapse",),
+                "fields": (
+                    "groups",
+                    "user_permissions",
+                ),
             },
         ),
     )

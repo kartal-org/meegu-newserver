@@ -40,6 +40,7 @@ class File(models.Model):
         ("ongoing", "Ongoing"),
         ("submitted", "Submitted"),
         ("accepted", "Accepted"),
+        ("recommended", "Recommended"),
         ("rejected", "Rejected"),
         ("published", "Published"),
     ]

@@ -4,7 +4,7 @@ from .serializers import *
 
 
 class RecommendationList(generics.ListCreateAPIView):
-    permission_classes = [permissions.IsAuthenticated]
+    # permission_classes = [permissions.IsAuthenticated]
     # queryset = Recommendation.objects.all()
     serializer_class = RecommendationSerializer
 
@@ -14,8 +14,12 @@ class RecommendationList(generics.ListCreateAPIView):
         """
         # Default filter based on ownership
         user = self.request.user
-        archive = self.request.query_params.get('archive')
-        queryset = Recommendation.active.filter(adviser=user)
+        archive = self.request.query_params.get("archive")
+        workspace = self.request.query_params.get("workspace")
+        queryset = Recommendation.active.all()
+
+        if workspace is not None:
+            queryset = queryset.filter(file__workspace__id=workspace)
 
         if archive:
             queryset = Recommendation.objects.filter(isActive=False)
@@ -43,8 +47,8 @@ class CommentList(generics.ListCreateAPIView):
         Comment query Filters
         """
 
-        archive = self.request.query_params.get('archive')
-        file = self.request.query_params.get('file')
+        archive = self.request.query_params.get("archive")
+        file = self.request.query_params.get("file")
         queryset = Comment.active.all()
 
         if file is not None:
@@ -76,7 +80,7 @@ class ReplyList(generics.ListCreateAPIView):
         Reply query Filters
         """
 
-        archive = self.request.query_params.get('archive')
+        archive = self.request.query_params.get("archive")
 
         queryset = Reply.active.all()
 
