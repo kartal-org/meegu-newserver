@@ -4,7 +4,7 @@ from .serializers import *
 
 
 class RecommendationList(generics.ListCreateAPIView):
-    # permission_classes = [permissions.IsAuthenticated]
+    permission_classes = [permissions.IsAuthenticated]
     # queryset = Recommendation.objects.all()
     serializer_class = RecommendationSerializer
 
@@ -16,10 +16,13 @@ class RecommendationList(generics.ListCreateAPIView):
         user = self.request.user
         archive = self.request.query_params.get("archive")
         workspace = self.request.query_params.get("workspace")
+        institution = self.request.query_params.get("institution")
         queryset = Recommendation.active.all()
 
         if workspace is not None:
             queryset = queryset.filter(file__workspace__id=workspace)
+        if institution is not None:
+            queryset = queryset.filter(institution__id=institution)
 
         if archive:
             queryset = Recommendation.objects.filter(isActive=False)
