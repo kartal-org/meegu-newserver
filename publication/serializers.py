@@ -37,7 +37,11 @@ class ArticleSerializer(serializers.ModelSerializer):
 
     def to_representation(self, instance):
         response = super().to_representation(instance)
-        response["recommendation"] = RecommendationSerializer(instance.recommendation).data
+        print(instance.recommendation)
+        if instance.recommendation is not None:
+            response["recommendation"] = RecommendationSerializer(instance.recommendation).data
+        else:
+            response["recommendation"] = None
         return response
 
 
