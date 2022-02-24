@@ -11,4 +11,4 @@ class LibraryItem(models.Model):
         unique_together = ["user", "article"]
 
     def __str__(self):
-        return self.publication.title
+        return self.article.title
