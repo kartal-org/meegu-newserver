@@ -12,7 +12,7 @@ class NotificationList(generics.ListAPIView):
         queryset = Notification.unread.all()
 
         user = self.request.user
-        history = self.request.query_params.get('history')
+        history = self.request.query_params.get("history")
 
         if user is not None:
             queryset = queryset.filter(receiver=user)
