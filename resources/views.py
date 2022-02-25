@@ -12,7 +12,7 @@ from rest_framework import filters
 
 
 class ResourceList(generics.ListCreateAPIView):
-    permission_classes = [permissions.IsAuthenticated, IsStorageAllowed]
+    permission_classes = [permissions.IsAuthenticated]
     serializer_class = ResourceSerializer
     parser_classes = [MultiPartParser, FormParser]
     filter_backends = [filters.SearchFilter]
@@ -31,7 +31,7 @@ class ResourceList(generics.ListCreateAPIView):
         queryset = Resource.active.all()
 
         if institution is not None:
-            queryset = queryset.filter(institution=institution)
+            queryset = queryset.filter(institution__id=institution)
 
         if fileType is not None:
             if fileType == "pdf":
