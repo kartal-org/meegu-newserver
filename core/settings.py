@@ -10,7 +10,7 @@ For the full list of settings and their values, see
 https://docs.djangoproject.com/en/4.0/ref/settings/
 """
 
-import os 
+import os
 from pathlib import Path
 from datetime import timedelta
 import environ
@@ -47,12 +47,10 @@ INSTALLED_APPS = [
     "django.contrib.messages",
     "django.contrib.staticfiles",
     "cloudinary_storage",
-
     "cloudinary",
     "drf_yasg",
     "rest_framework",
-    "corsheaders", 
-
+    "corsheaders",
     "accounts",
     "chats",
     "classrooms",
@@ -73,7 +71,6 @@ INSTALLED_APPS = [
 MIDDLEWARE = [
     "django.middleware.security.SecurityMiddleware",
     "whitenoise.middleware.WhiteNoiseMiddleware",
-    "django_currentuser.middleware.ThreadLocalUserMiddleware",
     "django.contrib.sessions.middleware.SessionMiddleware",
     "corsheaders.middleware.CorsMiddleware",
     "django.middleware.common.CommonMiddleware",
@@ -153,7 +150,7 @@ USE_TZ = True
 # Static files (CSS, JavaScript, Images)
 # https://docs.djangoproject.com/en/4.0/howto/static-files/
 
-#STATIC_URL = "static/"
+# STATIC_URL = "static/"
 
 # Default primary key field type
 # https://docs.djangoproject.com/en/4.0/ref/settings/#default-auto-field
@@ -229,8 +226,8 @@ STATIC_URL = "/static/"
 STATICFILES_DIRS = [os.path.join(BASE_DIR, "static")]
 
 MEDIA_ROOT = os.path.join(BASE_DIR, "media")
-MEDIA_URL = "/media/"  
-#MEDIA_URL = "/meegu-files/"  # or any prefix you choose
+MEDIA_URL = "/media/"
+# MEDIA_URL = "/meegu-files/"  # or any prefix you choose
 
 DEFAULT_FILE_STORAGE = "cloudinary_storage.storage.MediaCloudinaryStorage"
 CLOUDINARY_STORAGE = {
