@@ -26,7 +26,7 @@ class ResourceList(generics.ListCreateAPIView):
         institution = self.request.query_params.get("institution")
         isArchive = self.request.query_params.get("isArchive")
         fileType = self.request.query_params.get("fileType")
-        forStudent = self.request.query_params.get("fileType")
+        forStudent = self.request.query_params.get("forStudent")
 
         queryset = Resource.active.all()
 
