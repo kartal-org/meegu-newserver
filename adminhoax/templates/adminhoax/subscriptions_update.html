@@ -24,36 +24,41 @@
             <div id="layoutSidenav_content">
                 <main>
                     <div class="container-fluid px-4">
-                        <h1 class="mt-4">Institutions</h1> 
+                        <h1 class="mt-4">Subscriptions</h1> 
                         <div class="row">
                             <div class="card mb-4">
                                 <div class="card-header">
                                     <i class="fas fa-table me-1"></i>
-                                    Institutions Verification
+                                    Subscriptions Update
                                 </div>
                                 <div class="card-body row">
                                     <div class="col-md-7 card-body">
-                                        <img class="embed-responsive embed-responsive-16by9" src="{{ institutionVerification.document.url }}" alt="Insitution Image" style="width: 100%; max-height: 90%">
+                                        <img class="embed-responsive embed-responsive-16by9" src="{{ plan.image.url }}" alt="Insitution Image" style="width: 100%; max-height: 90%">
                                     </div>
                                     <br>
                                     <div class="col-md-3 card-body">  
                                         <br> 
                                         <div  class="card card-body"> 
-                                            <h5 class="card-title"> Institution: {{ institutionVerification.institution }} </h5>
+                                            <h5 class="card-title"> Plan: {{ plan.name }} </h5>
+                                            <!-- <br>
+                                            Description: {{ plan.description }}
                                             <br>
-                                            Address: {{ institution.address }}
+                                            Active: {{ plan.isActive }}
                                             <br>
-                                            Contact No.: {{ institution.contact }}
-                                            <br>
-                                            Email Address: {{ institution.email }}
+                                            Price: {{ plan.price }}
                                             <br> 
-                                            <br><br>
+                                            Storage Limit: {{ plan.storageLimit }}
+                                            <br> 
+                                            Date: {{ plan.dateUpdated }}
+                                            <br> 
+                                            <br><br> -->
                                             <form action="" method="post">
                                                 {% csrf_token %}
                                                 {{ form }}
                                                  
                                                 <br><br><br>
-                                                <input type="submit" value="Submit" class="btn btn-sm btn-outline-primary">
+                                                <input type="submit" value="Submit" class="btn btn-success">
+                                                <a href="http://127.0.0.1:8000/adminhoax/subscription/" class="btn btn-danger"> Cancel </a>
                                             </form>
                                         </div>
                                         
