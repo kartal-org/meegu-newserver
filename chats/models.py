@@ -5,7 +5,7 @@ from accounts.models import Account
 
 
 class Conversation(models.Model):
-    name = models.CharField(max_length=255)
+    name = models.CharField(max_length=255, null=True, blank=True)
     members = models.ManyToManyField(Account, related_name="chat_members")
     dateCreated = models.DateTimeField(auto_now_add=True)
     dateUpdated = models.DateTimeField(auto_now=True)
