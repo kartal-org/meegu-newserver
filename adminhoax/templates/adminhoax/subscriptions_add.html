@@ -24,23 +24,32 @@
             <div id="layoutSidenav_content">
                 <main>
                     <div class="container-fluid px-4">
-                        <h1 class="mt-4">Classrooms</h1> 
+                        <h1 class="mt-4">Subscriptions</h1> 
                         <div class="row">
                             <div class="card mb-4">
                                 <div class="card-header">
                                     <i class="fas fa-table me-1"></i>
-                                    Classrooms
+                                    Subscriptions Create
                                 </div>
                                 <div class="card-body">
-                                    <h1 class="ui header">Delete Classroom?</h1>
+                                    <!-- <h1 class="ui header">Delete Classroom?</h1> -->
 
   
                                     <form class="ui form" method="POST" action="">
                                         {% csrf_token %}
-                                
-                                        {{form.as_p}}
-                                
-                                        <input type="submit" class="ui button primary" value="Submit">
+                                        Plane Name: {{form.name}}
+                                        <br><br>
+                                        Description: {{form.description}}
+                                        <br><br>
+                                        Active: {{form.isActive}}
+                                        <br><br>
+                                        Price: {{form.price}}
+                                        <br><br>
+                                        Storage Limit: {{form.storageLimit}}
+                                        <br><br>    
+                                         
+                                        <input type="submit" class="btn btn-success" value="Submit"> 
+                                        <a href="http://127.0.0.1:8000/adminhoax/subscription/" class="btn btn-danger"> Cancel </a>
                                     </form>  
                                 </div>
                             </div>

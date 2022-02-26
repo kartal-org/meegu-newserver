@@ -24,68 +24,64 @@
             <div id="layoutSidenav_content">
                 <main>
                     <div class="container-fluid px-4">
-                        <h1 class="mt-4">Accounts</h1> 
+                        <h1 class="mt-4">Institutions</h1> 
                         <div class="row">
                             <div class="card mb-4">
                                 <div class="card-header">
-                                    <i class="fas fa-table me-1"></i>
-                                    
-                                    <a class="btn  btn-outline-primary" role="button" href="http://127.0.0.1:8000/adminhoax/account/">Users</a> 
-                                    <a class="btn" role="button" href="http://127.0.0.1:8000/adminhoax/accounts_staff/">Staffs</a>
+                                    <i class="fas fa-table me-1"></i> 
+                                    <a class="btn " role="button" href="http://127.0.0.1:8000/adminhoax/subscription/">Pending</a>
+                                    <a class="btn " role="button" href="http://127.0.0.1:8000/adminhoax/transaction/">Disapproved</a>  
+                                    <a class="btn " role="button" href="http://127.0.0.1:8000/adminhoax/transaction/">Disapproved</a> 
                                 </div>
                                 <div class="card-body">
                                     <table id="datatablesSimple">
                                         <thead>
                                             <tr>
                                                 <th>ID</th>
-                                                <th>Firstname</th>
-                                                <th>Lastname</th>
-                                                <th>Username</th>
+                                                <th>Name</th>
+                                                <th>Contact</th>
+                                                <th>Address</th>
                                                 <th>Email</th> 
-                                                <th>Type</th> 
-                                                <th>Group</th>
-                                                <th>Date Created</th>
+                                                <th>Creator</th>
+                                                <th>Active</th>
+                                                <th>Verified</th>
+                                                <th>Date Created</th>  
                                                 <th>Action</th>    
                                             </tr>
                                         </thead>
                                         <tfoot>
                                             <tr>
                                                 <th>ID</th>
-                                                <th>Firstname</th>
-                                                <th>Lastname</th>
-                                                <th>Username</th>
+                                                <th>Name</th>
+                                                <th>Contact</th>
+                                                <th>Address</th>
                                                 <th>Email</th> 
-                                                <th>Type</th>
-                                                <th>Group</th> 
-                                                <th>Date Created</th> 
+                                                <th>Creator</th>
+                                                <th>Active</th>
+                                                <th>Verified</th>
+                                                <th>Date Created</th>   
                                                 <th>Action</th> 
                                             </tr>
                                         </tfoot>
 
                                         <tbody> 
 
-                                            {% for users in users %} 
+                                            {% for institutionPending in institutionPending %} 
                                             <tr>
-                                                <td> {{ users.id }} </td>
-                                                <td> {{ users.first_name }} </td> 
-                                                <td> {{ users.last_name }} </td>
-                                                <td> {{ users.username }} </td>
-                                                <td> {{ users.email }} </td>
-                                                <td> {{ users.type }} </td> 
-                                                <td>  
-                                                    {{ users.groups }}
-                                                     <!-- {% for permgroups in permgroups %} 
-                                                    {{ permgroups.groups.name }} 
-                                                    {% endfor %} --> 
-                                                    <!-- {% for permgroups  in permgroups %}
-                                                        {{ permgroups.groups.name }}
-                                                    {% endfor %} --> 
-                                                </td> 
-                                                <td> {{ users.dateCreated }} </td>  
+                                                <td> {{ institution.id }} </td>
+                                                <td> {{ institution.name }} </td> 
+                                                <td> {{ institution.contact }} </td>
+                                                <td> {{ institution.address }} </td>
+                                                <td> {{ institution.email }} </td>
+                                                <td> {{ institution.creator }} </td>
+                                                <td> {{ institution.isActive }} </td>
+                                                <td> {{ institution.is_verified }} </td> 
+                                                <td> {{ institution.dateCreated }} </td> 
                                                 <td> 
-                                                    <a href="{% url 'accounts_update' users.id %}" class="btn btn-sm btn-primary">Update</a>
-                                                    <a href="{% url 'accounts_delete_confirm' users.id %}" class="btn btn-sm btn-danger"> Delete </a>
-                                                </td>
+                                                    <a href="{% url 'institutions_view_verify' institution.id %}" class="btn btn-sm btn-primary">View</a>
+                                                    <a href="{% url 'institutions_delete_confirm' institution.id %}" class="btn btn-sm btn-danger"> Delete </a>
+                                                
+                                                </td>     
                                             </tr>
                                             {% endfor %}
  

@@ -24,14 +24,15 @@
             <div id="layoutSidenav_content">
                 <main>
                     <div class="container-fluid px-4">
-                        <h1 class="mt-4">Accounts</h1> 
+                        <h1 class="mt-4">Accounts
+                            <a style="float: right; width: 100px;" class="btn btn-primary" role="button" class="btn btn-primary" href="http://127.0.0.1:8000/adminhoax/accounts_add/">ADD</a>
+                        </h1> 
                         <div class="row">
                             <div class="card mb-4">
                                 <div class="card-header">
                                     <i class="fas fa-table me-1"></i>
-                                    
-                                    <a class="btn  btn-outline-primary" role="button" href="http://127.0.0.1:8000/adminhoax/account/">Users</a> 
-                                    <a class="btn" role="button" href="http://127.0.0.1:8000/adminhoax/accounts_staff/">Staffs</a>
+                                    <a class="btn" role="button" href="http://127.0.0.1:8000/adminhoax/account/">Users</a> 
+                                    <a class="btn btn-outline-primary" role="button" href="http://127.0.0.1:8000/adminhoax/accounts_staff/">Staffs</a>  
                                 </div>
                                 <div class="card-body">
                                     <table id="datatablesSimple">
@@ -43,7 +44,6 @@
                                                 <th>Username</th>
                                                 <th>Email</th> 
                                                 <th>Type</th> 
-                                                <th>Group</th>
                                                 <th>Date Created</th>
                                                 <th>Action</th>    
                                             </tr>
@@ -55,8 +55,7 @@
                                                 <th>Lastname</th>
                                                 <th>Username</th>
                                                 <th>Email</th> 
-                                                <th>Type</th>
-                                                <th>Group</th> 
+                                                <th>Type</th> 
                                                 <th>Date Created</th> 
                                                 <th>Action</th> 
                                             </tr>
@@ -72,15 +71,15 @@
                                                 <td> {{ users.username }} </td>
                                                 <td> {{ users.email }} </td>
                                                 <td> {{ users.type }} </td> 
-                                                <td>  
-                                                    {{ users.groups }}
-                                                     <!-- {% for permgroups in permgroups %} 
+                                                <!-- <td>  
+                                                    {{ users.groups.name }}
+                                                     {% for permgroups in permgroups %} 
                                                     {{ permgroups.groups.name }} 
-                                                    {% endfor %} --> 
+                                                    {% endfor %} -->
                                                     <!-- {% for permgroups  in permgroups %}
                                                         {{ permgroups.groups.name }}
-                                                    {% endfor %} --> 
-                                                </td> 
+                                                    {% endfor %} 
+                                                </td>  -->
                                                 <td> {{ users.dateCreated }} </td>  
                                                 <td> 
                                                     <a href="{% url 'accounts_update' users.id %}" class="btn btn-sm btn-primary">Update</a>

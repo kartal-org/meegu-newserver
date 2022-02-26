@@ -25,20 +25,16 @@
                             <form method="POST">
                                 {% csrf_token %}
                                 <div class="form-floating mb-3"> 
-                                    <label>Email address</label>
-                                    <input name="email" class="form-control" id="inputEmail" type="email" placeholder="name@example.com" />
+                                    <label>Username</label>
+                                    <input name="username" class="form-control" type="text" placeholder="Username" />
                                 </div>
                                 <div class="form-floating mb-3">
                                     <label>Password</label>
-                                    <input name="password" class="form-control" id="inputPassword" type="password" placeholder="Password" /> 
-                                </div>
-                                <div class="form-check mb-3">
-                                    <input class="form-check-input" id="inputRememberPassword" type="checkbox" value="" />
-                                    <label class="form-check-label" for="inputRememberPassword">Remember Password</label>
-                                </div>
+                                    <input name="password" class="form-control" type="password" placeholder="Password" /> 
+                                </div> 
                                 <div class="d-flex align-items-center justify-content-between mt-4 mb-0">
                                     <a class="small"></a>
-                                    <a class="btn btn-primary" href="{% url 'dashboard' %}">Login</a>
+                                    <input type="submit" class="btn btn-primary" value="Login"> 
                                 </div>
                             </form>
                         </div>

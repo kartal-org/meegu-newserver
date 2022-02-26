@@ -221,6 +221,7 @@ SOCIAL_AUTH_TWITTER_KEY = env("TWITTER_KEY")
 SOCIAL_AUTH_TWITTER_SECRET = env("TWITTER_SECRET")
 
 AUTH_USER_MODEL = "accounts.Account"
+LOGIN_REDIRECT_URL = 'dashboard'
 
 SWAGGER_SETTINGS = {"SECURITY_DEFINITIONS": {"Bearer": {"type": "apiKey", "name": "Authorization", "in": "header"}}}
 

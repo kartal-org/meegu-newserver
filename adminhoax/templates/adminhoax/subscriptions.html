@@ -31,7 +31,7 @@
                             <div class="card mb-4">
                                 <div class="card-header">
                                     <i class="fas fa-table me-1"></i>
-                                    <a class="btn " role="button" href="http://127.0.0.1:8000/adminhoax/subscription/">Subscription Plans</a> 
+                                    <a class="btn  btn-outline-primary" role="button" href="http://127.0.0.1:8000/adminhoax/subscription/">Subscription Plans</a> 
                                     <a class="btn " role="button" href="http://127.0.0.1:8000/adminhoax/transaction/">Transactions</a> 
                                 </div> 
                                 <div class="card-body">
@@ -72,7 +72,8 @@
                                                 <td> {{ subscription.storageLimit }} </td> 
                                                 <td> {{ subscription.dateCreated }} </td>    
                                                 <td> 
-                                                    <a href="{% url 'accounts_delete_confirm' users.id %}" class="btn btn-sm btn-danger"> Delete </a>
+                                                    <a href="{% url 'subscriptions_update' subscription.id %}" class="btn btn-sm btn-primary">Update</a>
+                                                    <a href="{% url 'subscriptions_delete_confirm' subscription.id %}" class="btn btn-sm btn-danger"> Delete </a>
                                                 </td> 
                                             </tr>
                                             {% endfor %}

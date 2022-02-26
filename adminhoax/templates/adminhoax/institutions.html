@@ -20,7 +20,7 @@
         <div id="layoutSidenav">
 
             {%  include 'adminhoax/sidebar.html'  %} 
-            
+            {% csrf_token %}
             <div id="layoutSidenav_content">
                 <main>
                     <div class="container-fluid px-4">
@@ -28,8 +28,10 @@
                         <div class="row">
                             <div class="card mb-4">
                                 <div class="card-header">
-                                    <i class="fas fa-table me-1"></i>
-                                    Institution Manager
+                                    <i class="fas fa-table me-1"></i> 
+                                    <a class="btn btn-outline-primary" role="button" href="http://127.0.0.1:8000/adminhoax/institution/">Pending</a>
+                                    <a class="btn " role="button" href="http://127.0.0.1:8000/adminhoax/institutions_approved/">Approved</a>  
+                                    <a class="btn " role="button" href="http://127.0.0.1:8000/adminhoax/transaction/">Disapproved</a> 
                                 </div>
                                 <div class="card-body">
                                     <table id="datatablesSimple">
@@ -41,8 +43,8 @@
                                                 <th>Address</th>
                                                 <th>Email</th> 
                                                 <th>Creator</th>
-                                                <th>Active</th>
-                                                <th>Verified</th>
+                                                <th>Active</th> 
+                                                <th>Status</th> 
                                                 <th>Date Created</th>  
                                                 <th>Action</th>    
                                             </tr>
@@ -55,8 +57,8 @@
                                                 <th>Address</th>
                                                 <th>Email</th> 
                                                 <th>Creator</th>
-                                                <th>Active</th>
-                                                <th>Verified</th>
+                                                <th>Active</th> 
+                                                <th>Status</th> 
                                                 <th>Date Created</th>   
                                                 <th>Action</th> 
                                             </tr>
@@ -64,18 +66,23 @@
 
                                         <tbody> 
 
-                                            {% for institution in institution %} 
+                                            {% for institutionVerification in institutionVerification %} 
                                             <tr>
-                                                <td> {{ institution.id }} </td>
-                                                <td> {{ institution.name }} </td> 
-                                                <td> {{ institution.contact }} </td>
-                                                <td> {{ institution.address }} </td>
-                                                <td> {{ institution.email }} </td>
-                                                <td> {{ institution.creator }} </td>
-                                                <td> {{ institution.isActive }} </td>
-                                                <td> {{ institution.is_verified }} </td> 
-                                                <td> {{ institution.dateCreated }} </td> 
-                                                <td> <a href="{% url 'institutions_view_verify' institution.id %}" class="btn btn-sm btn-primary">View</a></td>     
+                                                <td> {{ institutionVerification.institution.id }} </td>
+                                                <td> {{ institutionVerification.institution.name }} </td> 
+                                                <td> {{ institutionVerification.institution.contact }} </td>
+                                                <td> {{ institutionVerification.institution.address }} </td>
+                                                <td> {{ institutionVerification.institution.email }} </td>
+                                                <td> {{ institutionVerification.institution.creator }} </td>
+                                                <td> {{ institutionVerification.institution.isActive }} </td>
+                                                <td> {{ institutionVerification.status }} </td> 
+                                                <td> {{ institutionVerification.institution.dateCreated }} </td> 
+                                                <td> 
+                                                    <!-- {% if perms.institution.change_verification %} -->
+                                                    <a href="{% url 'institutions_view_verify' institutionVerification.institution.id %}" class="btn btn-sm btn-primary">View</a>
+                                                    <!-- {% endif %} --> 
+                                                
+                                                </td>     
                                             </tr>
                                             {% endfor %}
  

@@ -11,7 +11,24 @@ class InstitutionVerifyForm(ModelForm):
 		model = Verification
 		fields = ['status']
 
+class UpdateAccount(ModelForm):
+	class Meta:
+		model = Account
+		fields = '__all__'
+
+class AddStaffAccount(ModelForm):
+	class Meta:
+		model = Account
+		fields = '__all__'
+		#fields = ['username', 'email', 'password1', 'password2']
+
 class AddSubscriptionPlan(ModelForm):
 	class Meta:
 		model = SubscriptionPlan
 		fields = '__all__'
+
+class UpdateSubscriptionPlan(ModelForm):
+	class Meta:
+		model = SubscriptionPlan
+		fields = '__all__'
+ 

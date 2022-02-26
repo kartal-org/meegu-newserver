@@ -1,3 +1,4 @@
+from pickle import TRUE
 from django.shortcuts import render, redirect
 import datetime
 from .models import *
@@ -9,11 +10,46 @@ from notification.models import *
 from publication.models import *
 from transactions.models import * 
 from adminhoax.forms import * 
+from django.contrib.auth import authenticate, login, logout
+from django.contrib import messages 
+from django.contrib.auth.decorators import login_required
+from django.contrib.auth.models import Group
+from django.contrib.auth.decorators import user_passes_test 
 
 # Create your views here.
-def login(request):
-    return render(request, "adminhoax/login.html")
+def loginPage(request):  
+    if request.method == 'POST':  
+        username = request.POST.get('username')
+        password =request.POST.get('password')
+        breakpoint()
+        print( username, password)
+        user = authenticate(request, username=username, password=password)
+         
+        #if request.user.is_superuser:
+        if user is not None: 
+            login(request, user)
+            #return redirect('dashboard')
+            # return redirect('dashboard')
+            #if request.user.is_superuser: 
+            if request.user.is_staff:
+            #if request.user.is_superuser: 
+                return redirect('dashboard')
+            else:
+                print( user.email, user.password)
+                return redirect('institution')
+        else:
+            # print("error")
+            messages.info(request, 'Username OR password is incorrect')
+         
+    context = {}
+    return render(request, "adminhoax/login.html", context)
 
+def logoutUser(request):
+	logout(request)
+	return redirect('loginPage') 
+
+@login_required(login_url='login')
+@user_passes_test(lambda u: u.is_superuser)
 def home(request):
     logs = Notification.objects.all()   
     accountCount = Account.objects.count()
@@ -32,12 +68,39 @@ def home(request):
     return render(request, "adminhoax/index.html", contain)
 
 def account(request): 
-    users = Account.objects.all()   
+    users = Account.objects.all().filter(is_staff=False) 
 
     contain = { 
         "users": users, 
     }
     return render(request, "adminhoax/accounts.html", contain)
+
+def accountStaff(request): 
+    users = Account.objects.all().filter(is_staff=True)   
+
+    contain = { 
+        "users": users, 
+    }
+    return render(request, "adminhoax/accounts_staff.html", contain)
+
+def accountAdd(request):   
+    form = AddStaffAccount()
+    
+    #%verifier_group = Group.objects.get(name='verifier') 
+
+    if request.method == 'POST':
+        form = AddStaffAccount(request.POST)
+        if form.is_valid:
+            #form.groups.add(verifier_group)
+            #user = form.cleaned_data.get('email')
+            form.save()
+            return redirect('accounts_staff')
+
+    contain = {
+        'form':form
+    } 
+    return render(request, "adminhoax/accounts_add.html", contain) 
+ 
 
 def accountDelete(request, pk):
     delete_user = Account.objects.get(id=pk)
@@ -46,6 +109,29 @@ def accountDelete(request, pk):
         return redirect('account')
     
     return render(request, "adminhoax/accounts_delete_confirm.html")
+
+def accountUpdate(request, pk):
+    update_user = Account.objects.get(id=pk) 
+    form = UpdateAccount(instance=update_user) 
+ 
+    if request.method == 'POST': 
+        form = UpdateAccount(request.POST, instance=update_user)
+        print("error")
+        if form.is_valid(): 
+            print("error")
+            verifier_group = Group.objects.get(name='verifier') 
+            update_user.groups.add(verifier_group) 
+
+            form.save()
+            return redirect('account')
+                                                 
+    contain = {
+                'update_user':update_user,  
+                'form':form,
+                #'permgroups':permgroups,
+            }
+
+    return render(request, "adminhoax/accounts_update.html", contain) 
 
 def classroom(request): 
     recommendation = Recommendation.objects.all()  
@@ -64,27 +150,45 @@ def classroomDelete(request, pk):
     
     return render(request, "adminhoax/classrooms_delete_confirm.html")
  
-def institution(request): 
-    institution = Institution.objects.all()  
+def institution(request):  
+    institutionVerification = Verification.objects.all().filter(status="pending")  
 
     contain = { 
-        "institution": institution, 
+        'institutionVerification':institutionVerification,  
     }
 
     return render(request, "adminhoax/institutions.html", contain)
+
+def institutionApproved(request):   
+    institutionVerification = Verification.objects.all().filter(status="approved") 
+
+    contain = { 
+        'institutionVerification':institutionVerification,  
+    }
+
+    return render(request, "adminhoax/institutions_approved.html", contain)
+
+def institutionDelete(request, pk):
+    delete_institution = Institution.objects.get(id=pk)
+    if request.method == "POST":
+        delete_institution.delete()
+        return redirect('institution')
+    
+    return render(request, "adminhoax/institutions_delete_confirm.html")
 
 def institutionVerify(request, pk):
     institutionVerification = Verification.objects.get(id=pk) 
     institution = Institution.objects.get(id=institutionVerification.id)
     form = InstitutionVerifyForm(instance=institutionVerification)
-
-    # if request.method == 'POST': 
-    #     form = InstitutionVerifyForm(request.POST, instance=institutionVerification)
-    #     if form.is_valid():
-    #         form.save()
-    #         return redirect('institution')
+    
+    if request.method == 'POST': 
+        form = InstitutionVerifyForm(request.POST, instance=institutionVerification)
+        if form.is_valid():  
+            form.save()
+            return redirect('institution')
                                                  
-    contain = {'institutionVerification':institutionVerification, 
+    contain = {
+                'institutionVerification':institutionVerification, 
                 'institution':institution,
                 'form':form,
             }
@@ -100,18 +204,19 @@ def subscription(request):
 
     return render(request, "adminhoax/subscriptions.html", contain)
 
-def subscriptionAdd(request, pk): 
-    
-	if request.method == 'POST':
-		#print('Printing POST:', request.POST) 
-		formset = AddSubscriptionPlan(request.POST)
-		if formset.is_valid():
-			formset.save()
-			return redirect('/')
+def subscriptionAdd(request):   
+    form = AddSubscriptionPlan()
+    if request.method == 'POST':
+        form = AddSubscriptionPlan(request.POST)
+        if form.is_valid:
+            form.save()
+            return redirect('subscription')
 
-	context = {'form':formset}
-	return render(request, 'accounts/order_form.html', context)
-
+    contain = {
+        'form':form
+    } 
+    return render(request, "adminhoax/subscriptions_add.html", contain) 
+         
 def subscriptionDelete(request, pk):
     delete_subscription = SubscriptionPlan.objects.get(id=pk)
     if request.method == "POST":
@@ -119,6 +224,23 @@ def subscriptionDelete(request, pk):
         return redirect('subscription')
     
     return render(request, "adminhoax/subscription_delete_confirm.html") 
+
+def subscriptionUpdate(request, pk):
+    plan = SubscriptionPlan.objects.get(id=pk) 
+    form = UpdateSubscriptionPlan(instance=plan)
+
+    if request.method == 'POST': 
+        form = UpdateSubscriptionPlan(request.POST, instance=plan)
+        if form.is_valid():
+            form.save()
+            return redirect('subscription')
+                                                 
+    contain = {
+                'plan':plan,  
+                'form':form,
+            }
+
+    return render(request, "adminhoax/subscriptions_update.html", contain)
 
 def transaction(request):  
     transaction = Transaction.objects.all()
