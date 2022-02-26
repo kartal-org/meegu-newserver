@@ -32,6 +32,7 @@ class WorkspaceList(generics.ListCreateAPIView):
             else:
                 queryset = queryset.exclude(creator=user)
         if isAdviser:
+
             queryset = Workspace.activeWorkspaces.filter(adviser=user)
         print(queryset)
         return queryset
@@ -63,7 +64,8 @@ class FileList(generics.ListCreateAPIView):
             queryset = queryset.filter(status=status)
         if workspace is not None:
             print("workspace here")
-            queryset = queryset.filter(workspace=workspace)
+            # breakpoint()
+            queryset = queryset.filter(workspace__id=workspace)
         if archive:
             queryset = File.objects.filter(isActive=False)
 

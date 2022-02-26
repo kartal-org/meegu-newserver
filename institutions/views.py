@@ -101,6 +101,20 @@ class MemberDetail(generics.RetrieveUpdateDestroyAPIView):
     serializer_class = MemberSerializer
 
 
-class VerificationCreate(generics.CreateAPIView):
+class VerificationList(generics.ListCreateAPIView):
     permission_classes = [permissions.IsAuthenticated]
     serializer_class = VerificationSerializer
+
+    def get_queryset(self):
+        """
+        Member query Filters
+        """
+
+        institution = self.request.query_params.get("institution")
+
+        queryset = Verification.objects.all()
+
+        if institution is not None:
+            queryset = queryset.filter(institution__id=institution)
+
+        return queryset

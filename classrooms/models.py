@@ -1,7 +1,10 @@
 from django.db import models
 from accounts.models import Account
-from workspaces.models import File
+from workspaces.models import File, Workspace
 from institutions.models import Institution
+from django.db.models.signals import post_save
+from django.dispatch import receiver
+from notification.models import Notification
 
 # Create your models here.
 
@@ -28,6 +31,42 @@ class Recommendation(models.Model):
 
     def __str__(self):
         return self.title
+
+
+@receiver(post_save, sender=Recommendation)
+def apply_Recommendation_handler(created, instance, *args, **kwargs):
+
+    if created:
+        file = File.objects.get(pk=instance.file.id)
+        file.status = "accepted"
+        file.save()
+        pass
+
+
+@receiver(post_save, sender=Recommendation)
+def apply_NotifyStudent_handler(created, instance, *args, **kwargs):
+
+    if created:
+        # what do we need: notify every student:
+        # what do we have: file ID
+        members = Workspace.objects.get(pk=instance.file.workspace.id).members
+        membersID = []
+
+        for x in members.all():
+            membersID.append(x.id)
+            notif = Notification.objects.create(
+                sender=Account.objects.get(pk=1),
+                type="accepted",
+                message="Your file, %s is accepted and has been recommended by your adviser!" % instance.file.name,
+                redirectID=instance.file.id,
+                receiver=x,
+            )
+
+            notif.save()
+            print(x.id)
+        #
+        # breakpoint()
+        pass
 
 
 class Comment(models.Model):

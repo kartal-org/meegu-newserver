@@ -9,15 +9,14 @@ from django.dispatch import receiver
 def upload_to(instance, filename):
     return "subscriptions/{filename}".format(filename=filename)
 
+
 # Create your models here.
 
 
 class SubscriptionPlan(models.Model):
     name = models.CharField(max_length=100, unique=True)
     description = models.TextField()
-    image = models.ImageField(
-        _("PlanImage"), upload_to=upload_to, blank=True, null=True
-    )
+    image = models.ImageField(_("PlanImage"), upload_to=upload_to, blank=True, null=True)
     isActive = models.BooleanField(default=True)
     price = models.DecimalField(max_digits=6, decimal_places=2)
     storageLimit = models.PositiveIntegerField()
@@ -32,7 +31,7 @@ class SubscriptionPlan(models.Model):
     active = ActivePlansManager()
 
     class Meta:
-        ordering = ("-dateUpdated",)
+        ordering = ("price",)
 
     def __str__(self):
         return self.name
