@@ -12,7 +12,7 @@ from rest_framework import filters
 
 
 class ResourceList(generics.ListCreateAPIView):
-    permission_classes = [permissions.IsAuthenticated]
+    permission_classes = [permissions.IsAuthenticated, IsStorageAllowed]
     serializer_class = ResourceSerializer
     parser_classes = [MultiPartParser, FormParser]
     filter_backends = [filters.SearchFilter]

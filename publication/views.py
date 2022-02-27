@@ -8,7 +8,7 @@ from django.db.models import Avg, Count
 
 
 class ArticleList(generics.ListCreateAPIView):
-    # permission_classes = [permissions.IsAuthenticated, IsStorageAllowed]
+    permission_classes = [permissions.IsAuthenticated, IsStorageAllowed]
     parser_classes = [MultiPartParser, FormParser]
     serializer_class = ArticleSerializer
     filter_backends = [filters.SearchFilter]
