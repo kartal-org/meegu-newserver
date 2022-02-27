@@ -42,7 +42,7 @@ class ArticleDetail(generics.RetrieveUpdateDestroyAPIView):
 
 class ReviewList(generics.ListCreateAPIView):
     permission_classes = [permissions.IsAuthenticated]
-    parser_classes = [MultiPartParser, FormParser]
+    # parser_classes = [MultiPartParser, FormParser]
     serializer_class = ReviewSerializer
 
     def get_queryset(self):
@@ -52,13 +52,16 @@ class ReviewList(generics.ListCreateAPIView):
         rate = self.request.query_params.get("rate")
 
         if article is not None:
-            queryset = queryset.filter(article__id=article)
+            # breakpoint()
+            queryset = queryset.filter(article__pk=article)
         if rate is not None:
             queryset = queryset.filter(rate=rate)
 
+        return queryset
+
 
 class ReviewDetail(generics.RetrieveUpdateDestroyAPIView):
-    parser_classes = [MultiPartParser, FormParser]
+    # parser_classes = [MultiPartParser, FormParser]
     permission_classes = [permissions.IsAuthenticated]
     queryset = Review.objects.all()
     serializer_class = ReviewSerializer
