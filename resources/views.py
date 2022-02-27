@@ -47,13 +47,15 @@ class ResourceList(generics.ListCreateAPIView):
             # What do we have now: student info
             # How do we solve the problem:
             # 1: Get all membership of the student
-            membership = Member.objects.filter(pk=user.id)
+            membership = Member.objects.filter(user=user)
             # 2. Get all the institution id of that membership
             institutionIDs = []
-            for x in membership:
+            for x in membership.all():
+                print(x.id)
                 institutionIDs.append(x.institution.id)
+            # breakpoint()
             # 3. Filter resource based on that id list
-            queryset = queryset.filter(pk__in=institutionIDs)
+            queryset = queryset.filter(institution__id__in=institutionIDs)
 
         return queryset
 
