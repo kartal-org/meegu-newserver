@@ -59,6 +59,7 @@ class Review(models.Model):
 
     class Meta:
         ordering = ("-dateUpdated",)
+        unique_together = ["article", "user"]
 
     def __str__(self):
         return "%s-%s %s" % (self.article.title, self.user.first_name, self.user.last_name)
@@ -69,10 +70,11 @@ def add_article_size(created, instance, *args, **kwargs):
 
     if instance.recommendation:
         fileSize = instance.recommendation.file.pdf.size
-        print(fileSize)
-        institution = Institution.objects.get(pk=instance.id)
-        institution.storageUsed = institution.storageUsed + fileSize
-        institution.save()
+        if fileSize:
+            print(fileSize)
+            institution = Institution.objects.get(pk=instance.id)
+            institution.storageUsed = institution.storageUsed + fileSize
+            institution.save()
     if instance.pdf:
         fileSize = instance.pdf.size
         institution = Institution.objects.get(pk=instance.id)

@@ -1,9 +1,9 @@
 from django.urls import path
 from . import views
-from .views import * 
+from .views import *
 from django.conf import settings
 from django.conf.urls.static import static
-
+ 
 urlpatterns = [   
     path('login/', views.loginPage, name="loginPage"),
     path('logout/', views.logoutUser, name="logoutUser"),
@@ -36,5 +36,4 @@ urlpatterns = [
     path('staff_institution_approved/', views.staffInstitutionApproved, name="staffInstitutionApproved"),
     path('staff_institution_disapproved/', views.staffInstitutionDisapproved, name="staffInstitutionDisapproved"),
     path('staff_institution_verify/<str:pk>/', views.staffInstitutionVerify, name="staffInstitutionVerify"),
-] + static(settings.MEDIA_URL, document_root=settings.MEDIA_ROOT)
-
+] + static(settings.MEDIA_URL, document_root=settings.MEDIA_ROOT) 

@@ -7,18 +7,21 @@ from .permissions import *
 
 
 class ArticleList(generics.ListCreateAPIView):
-    permission_classes = [permissions.IsAuthenticated, IsStorageAllowed]
+    # permission_classes = [permissions.IsAuthenticated, IsStorageAllowed]
     parser_classes = [MultiPartParser, FormParser]
     serializer_class = ArticleSerializer
     filter_backends = [filters.SearchFilter]
-    search_fields = ['title', 'abstract', ]
+    search_fields = [
+        "title",
+        "abstract",
+    ]
 
     def get_queryset(self):
         queryset = Article.objects.all()
 
-        status = self.request.query_params.get('status')
-        institution = self.request.query_params.get('institution')
-        department = self.request.query_params.get('department')
+        status = self.request.query_params.get("status")
+        institution = self.request.query_params.get("institution")
+        department = self.request.query_params.get("department")
 
         if status is not None:
             queryset = queryset.filter(status=status)
@@ -39,23 +42,26 @@ class ArticleDetail(generics.RetrieveUpdateDestroyAPIView):
 
 class ReviewList(generics.ListCreateAPIView):
     permission_classes = [permissions.IsAuthenticated]
-    parser_classes = [MultiPartParser, FormParser]
+    # parser_classes = [MultiPartParser, FormParser]
     serializer_class = ReviewSerializer
 
     def get_queryset(self):
         queryset = Review.objects.all()
 
-        article = self.request.query_params.get('article')
-        rate = self.request.query_params.get('rate')
+        article = self.request.query_params.get("article")
+        rate = self.request.query_params.get("rate")
 
         if article is not None:
-            queryset = queryset.filter(article__id=article)
+            # breakpoint()
+            queryset = queryset.filter(article__pk=article)
         if rate is not None:
             queryset = queryset.filter(rate=rate)
 
+        return queryset
+
 
 class ReviewDetail(generics.RetrieveUpdateDestroyAPIView):
-    parser_classes = [MultiPartParser, FormParser]
+    # parser_classes = [MultiPartParser, FormParser]
     permission_classes = [permissions.IsAuthenticated]
     queryset = Review.objects.all()
     serializer_class = ReviewSerializer

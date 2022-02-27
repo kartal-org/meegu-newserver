@@ -84,11 +84,14 @@ class MemberList(generics.ListCreateAPIView):
 
         institution = self.request.query_params.get("institution")
         isActive = self.request.query_params.get("isActive")
+        type = self.request.query_params.get("type")
 
         queryset = Member.active.all()
 
         if institution is not None:
             queryset = queryset.filter(institution=institution)
+        if type is not None:
+            queryset = queryset.filter(user__type=type)
         if isActive is not None:
             queryset = Member.objects.filter(isActive=False)
 
