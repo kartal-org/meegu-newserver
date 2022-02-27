@@ -5,6 +5,7 @@ from accounts.models import *
 from transactions.models import *
 from classrooms.models import *
 from institutions.models import Institution, Department, Verification
+from django.contrib.auth.forms import UserCreationForm
 
 class InstitutionVerifyForm(ModelForm):
 	class Meta:
@@ -16,11 +17,11 @@ class UpdateAccount(ModelForm):
 		model = Account
 		fields = '__all__'
 
-class AddStaffAccount(ModelForm):
+class AddStaffAccount(UserCreationForm):
 	class Meta:
 		model = Account
-		fields = '__all__'
-		#fields = ['username', 'email', 'password1', 'password2']
+		#fields = '__all__'
+		fields = ['first_name', 'last_name', 'username', 'email', 'password1', 'password2', 'is_staff']
 
 class AddSubscriptionPlan(ModelForm):
 	class Meta:
