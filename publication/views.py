@@ -7,18 +7,21 @@ from .permissions import *
 
 
 class ArticleList(generics.ListCreateAPIView):
-    permission_classes = [permissions.IsAuthenticated, IsStorageAllowed]
+    # permission_classes = [permissions.IsAuthenticated, IsStorageAllowed]
     parser_classes = [MultiPartParser, FormParser]
     serializer_class = ArticleSerializer
     filter_backends = [filters.SearchFilter]
-    search_fields = ['title', 'abstract', ]
+    search_fields = [
+        "title",
+        "abstract",
+    ]
 
     def get_queryset(self):
         queryset = Article.objects.all()
 
-        status = self.request.query_params.get('status')
-        institution = self.request.query_params.get('institution')
-        department = self.request.query_params.get('department')
+        status = self.request.query_params.get("status")
+        institution = self.request.query_params.get("institution")
+        department = self.request.query_params.get("department")
 
         if status is not None:
             queryset = queryset.filter(status=status)
@@ -45,8 +48,8 @@ class ReviewList(generics.ListCreateAPIView):
     def get_queryset(self):
         queryset = Review.objects.all()
 
-        article = self.request.query_params.get('article')
-        rate = self.request.query_params.get('rate')
+        article = self.request.query_params.get("article")
+        rate = self.request.query_params.get("rate")
 
         if article is not None:
             queryset = queryset.filter(article__id=article)
