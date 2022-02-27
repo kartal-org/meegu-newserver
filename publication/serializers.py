@@ -6,7 +6,7 @@ from accounts.serializers import AccountSerializer
 
 
 class ArticleSerializer(serializers.ModelSerializer):
-    pdf = serializers.FileField()
+    pdf = serializers.FileField(required=False)
 
     class Meta:
         model = Article
