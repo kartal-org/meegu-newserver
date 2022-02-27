@@ -19,7 +19,7 @@
 
         <div id="layoutSidenav">
 
-            {%  include 'adminhoax/sidebar.html'  %} 
+            {%  include 'adminhoax/staffSidebar.html'  %} 
             
             <div id="layoutSidenav_content">
                 <main>
@@ -29,9 +29,9 @@
                             <div class="card mb-4">
                                 <div class="card-header">
                                     <i class="fas fa-table me-1"></i> 
-                                    <a class="btn btn-outline-primary" role="button" href="http://127.0.0.1:8000/adminhoax/institution/">Pending</a>
-                                    <a class="btn" role="button" href="http://127.0.0.1:8000/adminhoax/institutions_approved/">Approved</a>  
-                                    <a class="btn" role="button" href="http://127.0.0.1:8000/adminhoax/institutions_disapproved/">Disapproved</a> 
+                                    <a class="btn" role="button" href="http://127.0.0.1:8000/adminhoax/staff_institution_pending/">Pending</a>
+                                    <a class="btn btn-outline-primary" role="button" href="http://127.0.0.1:8000/adminhoax/staff_institution_approved/">Approved</a>  
+                                    <a class="btn" role="button" href="http://127.0.0.1:8000/adminhoax/staff_institution_disapproved/">Disapproved</a> 
                                 </div>
                                 <div class="card-body">
                                     <table id="datatablesSimple">
@@ -77,12 +77,8 @@
                                                 <td> {{ institutionVerification.institution.isActive }} </td>
                                                 <td> {{ institutionVerification.status }} </td> 
                                                 <td> {{ institutionVerification.institution.dateCreated }} </td> 
-                                                <td> 
-                                                    <!-- {% if perms.institution.change_verification %} -->
-                                                    <a href="{% url 'institutions_view_verify' institutionVerification.institution.id %}" class="btn btn-sm btn-primary">View</a>
-                                                    <!-- {% endif %} -->
-                                                    <a href="{% url 'institutions_delete_confirm' institutionVerification.institution.id %}" class="btn btn-sm btn-danger"> Delete </a>
-                                                
+                                                <td>  
+                                                    <a href="{% url 'staffInstitutionVerify' institutionVerification.institution.id %}" role="button" class="btn btn-sm btn-primary">View</a> 
                                                 </td>     
                                             </tr>
                                             {% endfor %}

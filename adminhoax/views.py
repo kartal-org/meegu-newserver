@@ -20,25 +20,22 @@ from django.contrib.auth.decorators import user_passes_test
 def loginPage(request):  
     if request.method == 'POST':  
         username = request.POST.get('username')
-        password =request.POST.get('password')
-        breakpoint()
+        password =request.POST.get('password') 
+
         print( username, password)
         user = authenticate(request, username=username, password=password)
          
-        #if request.user.is_superuser:
         if user is not None: 
-            login(request, user)
-            #return redirect('dashboard')
-            # return redirect('dashboard')
-            #if request.user.is_superuser: 
-            if request.user.is_staff:
-            #if request.user.is_superuser: 
+            login(request, user) 
+            if request.user.is_superuser: 
                 return redirect('dashboard')
-            else:
+            elif request.user.is_staff and request.user.is_active:
                 print( user.email, user.password)
-                return redirect('institution')
-        else:
-            # print("error")
+                return redirect('staffInstitutionPending')
+            else: 
+                messages.info(request, 'Account Invalid OR is Inactive')
+
+        else: 
             messages.info(request, 'Username OR password is incorrect')
          
     context = {}
@@ -48,8 +45,7 @@ def logoutUser(request):
 	logout(request)
 	return redirect('loginPage') 
 
-@login_required(login_url='login')
-@user_passes_test(lambda u: u.is_superuser)
+@login_required(login_url='login') 
 def home(request):
     logs = Notification.objects.all()   
     accountCount = Account.objects.count()
@@ -85,16 +81,16 @@ def accountStaff(request):
 
 def accountAdd(request):   
     form = AddStaffAccount()
-    
-    #%verifier_group = Group.objects.get(name='verifier') 
-
+    print("pass") 
     if request.method == 'POST':
         form = AddStaffAccount(request.POST)
-        if form.is_valid:
-            #form.groups.add(verifier_group)
-            #user = form.cleaned_data.get('email')
+        if form.is_valid(): 
+            print("pass") 
+            # form.is_staff == True
+            print(form.cleaned_data)
             form.save()
-            return redirect('accounts_staff')
+            print("pass")
+            return redirect('accounts_staff') 
 
     contain = {
         'form':form
@@ -118,9 +114,7 @@ def accountUpdate(request, pk):
         form = UpdateAccount(request.POST, instance=update_user)
         print("error")
         if form.is_valid(): 
-            print("error")
-            verifier_group = Group.objects.get(name='verifier') 
-            update_user.groups.add(verifier_group) 
+            print("error") 
 
             form.save()
             return redirect('account')
@@ -149,7 +143,24 @@ def classroomDelete(request, pk):
         return redirect('classroom')
     
     return render(request, "adminhoax/classrooms_delete_confirm.html")
- 
+
+def staffhome(request):
+    logs = Notification.objects.all()   
+    accountCount = Account.objects.count()
+    instituionsCount = Institution.objects.count()
+    articlesCount = Article.objects.count()
+    transactionCount = Transaction.objects.count()
+
+    contain = {
+        "logs": logs, 
+        "accountCount": accountCount,  
+        "instituionsCount": instituionsCount,  
+        "articlesCount": articlesCount,  
+        "transactionCount": transactionCount,   
+    }
+
+    return render(request, "adminhoax/staffDashboard.html", contain)
+
 def institution(request):  
     institutionVerification = Verification.objects.all().filter(status="pending")  
 
@@ -167,6 +178,15 @@ def institutionApproved(request):
     }
 
     return render(request, "adminhoax/institutions_approved.html", contain)
+
+def institutionDisapproved(request):   
+    institutionVerification = Verification.objects.all().filter(status="disapproved") 
+
+    contain = { 
+        'institutionVerification':institutionVerification,  
+    }
+
+    return render(request, "adminhoax/institutions_disapproved.html", contain)
 
 def institutionDelete(request, pk):
     delete_institution = Institution.objects.get(id=pk)
@@ -194,6 +214,52 @@ def institutionVerify(request, pk):
             }
 
     return render(request, "adminhoax/institutions_view_verify.html", contain)
+
+def staffInstitutionPending(request):  
+    institutionVerification = Verification.objects.all().filter(status="pending")  
+
+    contain = { 
+        'institutionVerification':institutionVerification,  
+    }
+
+    return render(request, "adminhoax/staffInstPending.html", contain)
+
+def staffInstitutionApproved(request):   
+    institutionVerification = Verification.objects.all().filter(status="approved") 
+
+    contain = { 
+        'institutionVerification':institutionVerification,  
+    }
+
+    return render(request, "adminhoax/staffInstApproved.html", contain)
+
+def staffInstitutionDisapproved(request):   
+    institutionVerification = Verification.objects.all().filter(status="disapproved") 
+
+    contain = { 
+        'institutionVerification':institutionVerification,  
+    }
+
+    return render(request, "adminhoax/staffInstDisapproved.html", contain)
+
+def staffInstitutionVerify(request, pk):
+    institutionVerification = Verification.objects.get(id=pk) 
+    institution = Institution.objects.get(id=institutionVerification.id)
+    form = InstitutionVerifyForm(instance=institutionVerification)
+    
+    if request.method == 'POST': 
+        form = InstitutionVerifyForm(request.POST, instance=institutionVerification)
+        if form.is_valid():  
+            form.save()
+            return redirect('staffInstitutionPending')
+                                                 
+    contain = {
+                'institutionVerification':institutionVerification, 
+                'institution':institution,
+                'form':form,
+            }
+
+    return render(request, "adminhoax/staffInstVerify.html", contain)
 
 def subscription(request): 
     subscription = SubscriptionPlan.objects.all()   
