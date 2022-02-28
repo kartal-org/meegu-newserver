@@ -142,6 +142,8 @@ LANGUAGE_CODE = "en-us"
 
 TIME_ZONE = "UTC"
 
+TIME_ZONE = "Asia/Manila"
+
 USE_I18N = True
 
 USE_TZ = True
@@ -218,7 +220,7 @@ SOCIAL_AUTH_TWITTER_KEY = env("TWITTER_KEY")
 SOCIAL_AUTH_TWITTER_SECRET = env("TWITTER_SECRET")
 
 AUTH_USER_MODEL = "accounts.Account"
-LOGIN_REDIRECT_URL = 'dashboard'
+LOGIN_REDIRECT_URL = "dashboard"
 
 SWAGGER_SETTINGS = {"SECURITY_DEFINITIONS": {"Bearer": {"type": "apiKey", "name": "Authorization", "in": "header"}}}
 
@@ -238,4 +240,4 @@ CLOUDINARY_STORAGE = {
 }
 
 oauth2_settings.DEFAULTS["ACCESS_TOKEN_EXPIRE_SECONDS"] = 604800
-DATA_UPLOAD_MAX_MEMORY_SIZE = 5242880
+DATA_UPLOAD_MAX_MEMORY_SIZE = 10 * 1024 * 1024

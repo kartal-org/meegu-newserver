@@ -117,5 +117,5 @@ class Member(models.Model):
 def add_institution_creator_as_a_member_handler(created, instance, *args, **kwargs):
 
     if created:
-        member = Member.objects.create(user=instance.creator.id, institution=instance.id, isActive=True)
+        member = Member.objects.create(user=instance.creator, institution=instance, isActive=True)
         member.save()

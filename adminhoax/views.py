@@ -16,28 +16,28 @@ from django.contrib.auth.decorators import login_required
 from django.contrib.auth.models import Group
 from django.contrib.auth.decorators import user_passes_test
 
-# Create your views here. 
-def loginPage(request):  
-    if request.method == 'POST':  
-        username = request.POST.get('username')
-        password =request.POST.get('password') 
+# Create your views here.
+def loginPage(request):
+    if request.method == "POST":
+        username = request.POST.get("username")
+        password = request.POST.get("password")
 
-        print( username, password)
+        print(username, password)
         user = authenticate(request, username=username, password=password)
-         
-        if user is not None: 
-            login(request, user) 
-            if request.user.is_superuser: 
-                return redirect('dashboard')
-            elif request.user.is_staff and request.user.is_active:
-                print( user.email, user.password)
-                return redirect('staffInstitutionPending')
-            else: 
-                messages.info(request, 'Account Invalid OR is Inactive')
 
-        else: 
-            messages.info(request, 'Username OR password is incorrect')
-          
+        if user is not None:
+            login(request, user)
+            if request.user.is_superuser:
+                return redirect("dashboard")
+            elif request.user.is_staff and request.user.is_active:
+                print(user.email, user.password)
+                return redirect("staffInstitutionPending")
+            else:
+                messages.info(request, "Account Invalid OR is Inactive")
+
+        else:
+            messages.info(request, "Username OR password is incorrect")
+
     context = {}
     return render(request, "adminhoax/login.html", context)
 
@@ -46,8 +46,8 @@ def logoutUser(request):
     logout(request)
     return redirect("loginPage")
 
- 
-@login_required(login_url='login')  
+
+@login_required(login_url="login")
 def home(request):
     logs = Notification.objects.all()
     accountCount = Account.objects.count()
@@ -85,19 +85,19 @@ def accountStaff(request):
 
 
 def accountAdd(request):
-    form = AddStaffAccount() 
-    print("pass") 
-    if request.method == 'POST':
+    form = AddStaffAccount()
+    print("pass")
+    if request.method == "POST":
         form = AddStaffAccount(request.POST)
-        if form.is_valid(): 
-            print("pass") 
+        if form.is_valid():
+            print("pass")
             # form.is_staff == True
             print(form.cleaned_data)
             form.save()
             print("pass")
-            return redirect('accounts_staff')  
-    
-    contain = { 
+            return redirect("accounts_staff")
+
+    contain = {
         "form": form,
         #'permgroups':permgroups,
     }
@@ -119,9 +119,9 @@ def accountUpdate(request, pk):
 
     if request.method == "POST":
         form = UpdateAccount(request.POST, instance=update_user)
-        print("error") 
-        if form.is_valid(): 
-            print("error")  
+        print("error")
+        if form.is_valid():
+            print("error")
 
             form.save()
             return redirect("account")
@@ -151,27 +151,29 @@ def classroomDelete(request, pk):
         delete_classroom.delete()
         return redirect("classroom")
 
-    return render(request, "adminhoax/classrooms_delete_confirm.html") 
-  
+    return render(request, "adminhoax/classrooms_delete_confirm.html")
+
+
 def staffhome(request):
-    logs = Notification.objects.all()   
+    logs = Notification.objects.all()
     accountCount = Account.objects.count()
     instituionsCount = Institution.objects.count()
     articlesCount = Article.objects.count()
     transactionCount = Transaction.objects.count()
 
     contain = {
-        "logs": logs, 
-        "accountCount": accountCount,  
-        "instituionsCount": instituionsCount,  
-        "articlesCount": articlesCount,  
-        "transactionCount": transactionCount,   
+        "logs": logs,
+        "accountCount": accountCount,
+        "instituionsCount": instituionsCount,
+        "articlesCount": articlesCount,
+        "transactionCount": transactionCount,
     }
 
     return render(request, "adminhoax/staffDashboard.html", contain)
 
-def institution(request):  
-    institutionVerification = Verification.objects.all().filter(status="pending")   
+
+def institution(request):
+    institutionVerification = Verification.objects.all().filter(status="pending")
 
 
 def institution(request):
@@ -193,15 +195,16 @@ def institutionApproved(request):
 
     return render(request, "adminhoax/institutions_approved.html", contain)
 
- 
-def institutionDisapproved(request):   
-    institutionVerification = Verification.objects.all().filter(status="disapproved") 
 
-    contain = { 
-        'institutionVerification':institutionVerification,  
+def institutionDisapproved(request):
+    institutionVerification = Verification.objects.all().filter(status="disapproved")
+
+    contain = {
+        "institutionVerification": institutionVerification,
     }
 
-    return render(request, "adminhoax/institutions_disapproved.html", contain) 
+    return render(request, "adminhoax/institutions_disapproved.html", contain)
+
 
 def institutionDelete(request, pk):
     delete_institution = Institution.objects.get(id=pk)
@@ -230,62 +233,69 @@ def institutionVerify(request, pk):
     }
 
     return render(request, "adminhoax/institutions_view_verify.html", contain)
- 
-def staffInstitutionPending(request):  
-    institutionVerification = Verification.objects.all().filter(status="pending")  
 
-    contain = { 
-        'institutionVerification':institutionVerification,  
+
+def staffInstitutionPending(request):
+    institutionVerification = Verification.objects.all().filter(status="pending")
+
+    contain = {
+        "institutionVerification": institutionVerification,
     }
 
     return render(request, "adminhoax/staffInstPending.html", contain)
 
-def staffInstitutionApproved(request):   
-    institutionVerification = Verification.objects.all().filter(status="approved") 
 
-    contain = { 
-        'institutionVerification':institutionVerification,  
+def staffInstitutionApproved(request):
+    institutionVerification = Verification.objects.all().filter(status="approved")
+
+    contain = {
+        "institutionVerification": institutionVerification,
     }
 
     return render(request, "adminhoax/staffInstApproved.html", contain)
 
-def staffInstitutionDisapproved(request):   
-    institutionVerification = Verification.objects.all().filter(status="disapproved") 
 
-    contain = { 
-        'institutionVerification':institutionVerification,  
+def staffInstitutionDisapproved(request):
+    institutionVerification = Verification.objects.all().filter(status="disapproved")
+
+    contain = {
+        "institutionVerification": institutionVerification,
     }
 
     return render(request, "adminhoax/staffInstDisapproved.html", contain)
 
+
 def staffInstitutionVerify(request, pk):
-    institutionVerification = Verification.objects.get(id=pk) 
+    breakpoint()
+    institutionVerification = Verification.objects.get(id=pk)
     institution = Institution.objects.get(id=institutionVerification.id)
     form = InstitutionVerifyForm(instance=institutionVerification)
-    
-    if request.method == 'POST': 
+
+    if request.method == "POST":
         form = InstitutionVerifyForm(request.POST, instance=institutionVerification)
-        if form.is_valid():  
+        if form.is_valid():
             form.save()
-            return redirect('staffInstitutionPending')
-                                                 
+            return redirect("staffInstitutionPending")
+
     contain = {
-                'institutionVerification':institutionVerification, 
-                'institution':institution,
-                'form':form,
-            }
+        "institutionVerification": institutionVerification,
+        "institution": institution,
+        "form": form,
+    }
 
     return render(request, "adminhoax/staffInstVerify.html", contain)
- 
+
+
 def subscription(request):
     subscription = SubscriptionPlan.objects.all()
 
     contain = {
-        "subscription": subscription, 
+        "subscription": subscription,
     }
 
     return render(request, "adminhoax/subscriptions.html", contain)
- 
+
+
 def subscriptionAdd(request):
     form = AddSubscriptionPlan()
     if request.method == "POST":
@@ -296,7 +306,8 @@ def subscriptionAdd(request):
 
     contain = {"form": form}
     return render(request, "adminhoax/subscriptions_add.html", contain)
- 
+
+
 def subscriptionDelete(request, pk):
     delete_subscription = SubscriptionPlan.objects.get(id=pk)
     if request.method == "POST":
@@ -332,7 +343,8 @@ def transaction(request):
     }
 
     return render(request, "adminhoax/transactions.html", contain)
- 
+
+
 def publication(request):
     article = Article.objects.all()
 
@@ -341,6 +353,7 @@ def publication(request):
     }
 
     return render(request, "adminhoax/publications.html", contain)
+
 
 def publicationDelete(request, pk):
     delete_publication = Article.objects.get(id=pk)

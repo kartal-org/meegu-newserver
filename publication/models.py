@@ -78,11 +78,11 @@ def add_article_size(created, instance, *args, **kwargs):
         fileSize = instance.recommendation.file.pdf.size
         if fileSize:
             print(fileSize)
-            institution = Institution.objects.get(pk=instance.id)
+            institution = Institution.objects.get(pk=instance.institution.id)
             institution.storageUsed = institution.storageUsed + fileSize
             institution.save()
     if instance.pdf:
         fileSize = instance.pdf.size
-        institution = Institution.objects.get(pk=instance.id)
+        institution = Institution.objects.get(pk=instance.institution.id)
         institution.storageUsed = institution.storageUsed + fileSize
         institution.save()
