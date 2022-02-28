@@ -46,5 +46,6 @@ urlpatterns = [
          name="schema-swagger-ui"),
 
     #adminhoax
-    path("adminhoax/", include("adminhoax.urls")),
+    #path("adminhoax/", include("adminhoax.urls")),
+    path("business/", include("adminhoax.urls")),
 ]
