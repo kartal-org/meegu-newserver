@@ -43,9 +43,9 @@
 												<th>Title</th>
 												<th>Status</th>
 												<th>Recommendation</th>
-												<th>Institution</th>
-												<th>Department</th>
+												<th>Institution</th> 
 												<th>Date Created</th>
+												<th>Action</th>
 											</tr>
 										</thead>
 										<tfoot>
@@ -54,22 +54,22 @@
 												<th>Title</th>
 												<th>Status</th>
 												<th>Recommendation</th>
-												<th>Institution</th>
-												<th>Department</th>
+												<th>Institution</th> 
 												<th>Date Created</th>
+												<th>Action</th>
 											</tr>
 										</tfoot>
 
 										<tbody>
-											{% for publication in publication %}
+											{% for article in article %}
 											<tr>
-												<td>{{ publication.id }}</td>
-												<td>{{ publication.title }}</td>
-												<td>{{ publication.status }}</td>
-												<td>{{ publication.recommendation }}</td>
-												<td>{{ publication.institution }}</td>
-												<td>{{ publication.department }}</td>
-												<td>{{ publication.dateCreated }}</td>
+												<td>{{ article.id }}</td>
+												<td>{{ article.title }}</td>
+												<td>{{ article.status }}</td>
+												<td>{{ article.recommendation }}</td>
+												<td>{{ article.institution }}</td> 
+												<td>{{ article.dateCreated }}</td> 
+												<a href="{% url 'publications_delete_confirm' article.id %}" class="btn btn-sm btn-danger"> Delete </a>
 											</tr>
 											{% endfor %}
 										</tbody>

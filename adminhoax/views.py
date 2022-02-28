@@ -96,6 +96,12 @@ def accountAdd(request):
             form.save()
             print("pass")
             return redirect('accounts_staff')  
+    
+    contain = { 
+        "form": form,
+        #'permgroups':permgroups,
+    }
+    return render(request, "adminhoax/accounts_add.html", contain)
 
 
 def accountDelete(request, pk):
@@ -297,7 +303,7 @@ def subscriptionDelete(request, pk):
         delete_subscription.delete()
         return redirect("subscription")
 
-    return render(request, "adminhoax/subscription_delete_confirm.html")
+    return render(request, "adminhoax/subscriptions_delete_confirm.html")
 
 
 def subscriptionUpdate(request, pk):
@@ -328,10 +334,18 @@ def transaction(request):
     return render(request, "adminhoax/transactions.html", contain)
  
 def publication(request):
-    publication = Article.objects.all()
+    article = Article.objects.all()
 
     contain = {
-        "publication": publication,
+        "article": article,
     }
 
     return render(request, "adminhoax/publications.html", contain)
+
+def publicationDelete(request, pk):
+    delete_publication = Article.objects.get(id=pk)
+    if request.method == "POST":
+        delete_publication.delete()
+        return redirect("publication")
+
+    return render(request, "adminhoax/publications_delete_confirm.html")

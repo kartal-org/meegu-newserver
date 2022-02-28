@@ -29,7 +29,9 @@ urlpatterns = [
     path('subscriptions_delete_confirm/<str:pk>/', views.subscriptionDelete, name="subscriptions_delete_confirm"), 
     path('subscriptions_update/<str:pk>/', views.subscriptionUpdate, name="subscriptions_update"),
     path('transaction/', views.transaction, name="transaction"),
+
     path('publication/', views.publication, name="publication"),
+    path('publication_delete_confirm/<str:pk>/', views.publicationDelete, name="publications_delete_confirm"),
 
     path('staff_dashboard/', views.staffhome, name="staffDashboard"),
     path('staff_institution_pending/', views.staffInstitutionPending, name="staffInstitutionPending"),
