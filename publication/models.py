@@ -2,9 +2,10 @@ from django.db import models
 from classrooms.models import Recommendation
 from institutions.models import Institution, Department
 from accounts.models import Account
-from django.db.models import Avg
+from django.db.models import Avg, Count
 from django.db.models.signals import post_save
 from django.dispatch import receiver
+
 
 # Create your models here.
 
@@ -37,6 +38,11 @@ class Article(models.Model):
     @property
     def rating(self):
         return Review.objects.filter(article=self.id).aggregate(Avg("rate"))["rate__avg"]
+
+    @property
+    def reviews(self):
+        # breakpoint()
+        return Review.objects.filter(article=self.id).aggregate(Count("id"))["id__count"]
 
     def __str__(self):
         return self.title

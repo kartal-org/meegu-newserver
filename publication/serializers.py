@@ -15,6 +15,7 @@ class ArticleSerializer(serializers.ModelSerializer):
             "title",
             "abstract",
             "rating",
+            "reviews",
             "dateCreated",
             "pdf",
             "dateUpdated",

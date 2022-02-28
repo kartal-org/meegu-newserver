@@ -14,12 +14,12 @@ class SubscriptionPlanList(generics.ListCreateAPIView):
         queryset = SubscriptionPlan.active.all()
 
         user = self.request.user
-        transactions = Transaction.objects.filter(institution__creator = user)
+        transactions = Transaction.objects.filter(institution__creator=user)
 
         if transactions is not None:
             if 0 in [o.plan.price for o in transactions]:
                 queryset = SubscriptionPlan.active.exclude(price=0)
-        
+
         return queryset
 
 
@@ -32,13 +32,17 @@ class TransactionList(generics.ListCreateAPIView):
         SubscriptionPlan query Filters
         """
         queryset = Transaction.objects.all()
+        institution = self.request.query_params.get("institution")
 
-        user = self.request.user   
+        user = self.request.user
 
         if user is not None:
             queryset = queryset.filter(institution__creator=user)
-        
+        if institution is not None:
+            queryset = queryset.filter(institution__id=institution)
+
         return queryset
+
 
 class TransactionDetail(generics.RetrieveUpdateDestroyAPIView):
     permission_classes = [permissions.IsAuthenticated]

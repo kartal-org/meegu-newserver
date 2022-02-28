@@ -1,22 +1,20 @@
 from django.db import models
 from accounts.models import Account
 from institutions.models import Verification
+from workspaces.models import File
 from django.db.models.signals import post_save
 from django.dispatch import receiver
 
 
 class Notification(models.Model):
 
-    options = (("verification", "verification"), ("submission",
-               "submission"), ("recommendation", "recommendation"))
+    options = (("verification", "verification"), ("submission", "submission"), ("recommendation", "recommendation"))
 
     message = models.TextField()
     isRead = models.BooleanField(default=False)
     type = models.CharField(max_length=25)
-    sender = models.ForeignKey(
-        Account, on_delete=models.CASCADE, null=True, blank=True, related_name="sender+")
-    receiver = models.ForeignKey(
-        Account, on_delete=models.CASCADE, null=True, blank=True, related_name="receiver+")
+    sender = models.ForeignKey(Account, on_delete=models.CASCADE, null=True, blank=True, related_name="sender+")
+    receiver = models.ForeignKey(Account, on_delete=models.CASCADE, null=True, blank=True, related_name="receiver+")
     redirectID = models.IntegerField(null=True, blank=True)
     dateCreated = models.DateTimeField(auto_now_add=True)
     dateModified = models.DateTimeField(auto_now=True)
@@ -46,7 +44,7 @@ def apply_verification_handler(created, instance, *args, **kwargs):
             type="verification",
             message="%s verification application is approved!" % instance.institution.name,
             redirectID=instance.institution.id,
-            receiver=instance.institution.creator
+            receiver=instance.institution.creator,
         )
 
         notif.save()
@@ -57,7 +55,23 @@ def apply_verification_handler(created, instance, *args, **kwargs):
             type="verification",
             message="%s verification application is disapproved!" % instance.institution.name,
             redirectID=instance.institution.id,
-            receiver=instance.institution.creator
+            receiver=instance.institution.creator,
         )
 
         notif.save()
+
+
+@receiver(post_save, sender=File)
+def submission_notify_adviser_handler(created, instance, *args, **kwargs):
+
+    if instance.status == "submitted":
+        if instance.workspace.adviser:
+            notif = Notification.objects.create(
+                # sender=Account.objects.get(pk=1),
+                type="submission",
+                message="There is a new submission in your classroom %s" % instance.workspace.name,
+                redirectID=instance.id,
+                receiver=instance.workspace.adviser,
+            )
+
+            notif.save()

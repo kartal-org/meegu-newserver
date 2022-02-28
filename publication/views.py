@@ -4,10 +4,11 @@ from .serializers import *
 from rest_framework.parsers import MultiPartParser, FormParser
 from rest_framework import filters
 from .permissions import *
+from django.db.models import Avg, Count
 
 
 class ArticleList(generics.ListCreateAPIView):
-    # permission_classes = [permissions.IsAuthenticated, IsStorageAllowed]
+    permission_classes = [permissions.IsAuthenticated, IsStorageAllowed]
     parser_classes = [MultiPartParser, FormParser]
     serializer_class = ArticleSerializer
     filter_backends = [filters.SearchFilter]
@@ -17,7 +18,14 @@ class ArticleList(generics.ListCreateAPIView):
     ]
 
     def get_queryset(self):
-        queryset = Article.objects.all()
+        # ratings = Review.objects.filter(article=OuterRef("pk"))
+        # breakpoint()
+
+        queryset = (
+            Article.objects.annotate(review_avg=Avg("review__rate"))
+            .annotate(review_count=Count("review"))
+            .order_by("-review_avg", "-review_count")
+        )
 
         status = self.request.query_params.get("status")
         institution = self.request.query_params.get("institution")

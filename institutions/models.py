@@ -4,6 +4,8 @@ from django.utils.translation import gettext_lazy as _
 from django.core.exceptions import ObjectDoesNotExist
 from django.db.models.signals import post_save
 from django.dispatch import receiver
+from django.db.models.signals import post_save
+from django.dispatch import receiver
 
 
 def upload_to(instance, filename):
@@ -65,7 +67,7 @@ def apply_verification_handler(created, instance, *args, **kwargs):
     Automatically set is_verified property of Institution model if verification is approved.
     """
 
-    if instance.status is "approved":
+    if instance.status == "approved":
         institution = Institution.objects.get(id=instance.institution.id)
         institution.is_verified = True
         institution.save()
@@ -109,3 +111,11 @@ class Member(models.Model):
 
     def __str__(self):
         return "%s %s-%s" % (self.user.first_name, self.user.last_name, self.institution.name)
+
+
+@receiver(post_save, sender=Institution)
+def add_institution_creator_as_a_member_handler(created, instance, *args, **kwargs):
+
+    if created:
+        member = Member.objects.create(user=instance.creator.id, institution=instance.id, isActive=True)
+        member.save()
