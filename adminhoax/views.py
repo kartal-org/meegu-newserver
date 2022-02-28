@@ -91,7 +91,7 @@ def accountAdd(request):
         form = AddStaffAccount(request.POST)
         if form.is_valid():
             print("pass")
-            # form.is_staff == True
+            request.user.is_staff = True
             print(form.cleaned_data)
             form.save()
             print("pass")
