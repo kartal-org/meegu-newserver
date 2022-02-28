@@ -214,7 +214,7 @@ def institutionDelete(request, pk):
 
 def institutionVerify(request, pk):
     institutionVerification = Verification.objects.get(id=pk)
-    institution = Institution.objects.get(id=institutionVerification.id)
+    #institution = Institution.objects.get(id=institutionVerification.id)
     form = InstitutionVerifyForm(instance=institutionVerification)
 
     if request.method == "POST":
@@ -225,7 +225,7 @@ def institutionVerify(request, pk):
 
     contain = {
         "institutionVerification": institutionVerification,
-        "institution": institution,
+        #"institution": institution,
         "form": form,
     }
 
