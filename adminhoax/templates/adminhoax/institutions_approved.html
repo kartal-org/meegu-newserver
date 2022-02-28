@@ -79,9 +79,9 @@
                                                 <td> {{ institutionVerification.institution.dateCreated }} </td> 
                                                 <td> 
                                                     <!-- {% if perms.institution.change_verification %} -->
-                                                    <a href="{% url 'institutions_view_verify' institutionVerification.institution.id %}" class="btn btn-sm btn-primary">View</a>
+                                                    <a href="{% url 'institutions_view_verify' institutionVerification.id %}" class="btn btn-sm btn-primary">View</a>
                                                     <!-- {% endif %} -->
-                                                    <a href="{% url 'institutions_delete_confirm' institutionVerification.institution.id %}" class="btn btn-sm btn-danger"> Delete </a>
+                                                    <a href="{% url 'institutions_delete_confirm' institutionVerification.id %}" class="btn btn-sm btn-danger"> Delete </a>
                                                 
                                                 </td>     
                                             </tr>
