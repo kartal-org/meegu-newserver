@@ -137,7 +137,9 @@ DATABASES = {
     #     "PORT": "5432",
     # },
 }
-DATABASES["default"] = DATABASES["backup" if DEBUG else "production"]
+
+# DATABASES["default"] = DATABASES["backup" if DEBUG else "production"]
+DATABASES["default"] = DATABASES["production"]
 
 # Password validation
 # https://docs.djangoproject.com/en/4.0/ref/settings/#auth-password-validators
