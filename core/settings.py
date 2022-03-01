@@ -122,18 +122,18 @@ DATABASES = {
     },
     "production": {
         "ENGINE": "django.db.backends.postgresql",
-        "NAME": "d82ti68pspu6v8",
-        "USER": "nqsrudlkdpsgao",
-        "PASSWORD": "741f652baf0c0c289c8d96300566cc68e0c2a9dc7145d0810c92804d549a9f7f",
-        "HOST": "ec2-54-74-35-87.eu-west-1.compute.amazonaws.com",
+        "NAME": "d6hl343rgm5ngr",
+        "USER": "adsiplqhmnhvtv",
+        "PASSWORD": "7ddf32225217a38305353234b8e04c2649d322a2722a5a05256cc4fd23358d8c",
+        "HOST": "ec2-50-19-32-96.compute-1.amazonaws.com",
         "PORT": "5432",
     },
     "backup": {
         "ENGINE": "django.db.backends.postgresql",
-        "NAME": "dc4csbaod78312",
-        "USER": "phxxruahktnjbu",
-        "PASSWORD": "24f1fcac8e37e672e10ab221f261a078faaefd5b141e75f303681f8542ea59d4",
-        "HOST": "ec2-52-208-221-89.eu-west-1.compute.amazonaws.com",
+        "NAME": "d6hl343rgm5ngr",
+        "USER": "adsiplqhmnhvtv",
+        "PASSWORD": "7ddf32225217a38305353234b8e04c2649d322a2722a5a05256cc4fd23358d8c",
+        "HOST": "ec2-50-19-32-96.compute-1.amazonaws.com",
         "PORT": "5432",
     },
 }
@@ -182,7 +182,7 @@ USE_TZ = True
 
 DEFAULT_AUTO_FIELD = "django.db.models.BigAutoField"
 
-CORS_ALLOWED_ORIGINS = ["http://localhost:3000", "http://localhost:3001", "https://capstonemeegu.herokuapp.com/"]
+CORS_ALLOWED_ORIGINS = ["http://localhost:3000", "http://localhost:3001"]
 
 REST_FRAMEWORK = {
     "DEFAULT_PERMISSION_CLASSES": [
