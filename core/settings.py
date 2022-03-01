@@ -128,14 +128,14 @@ DATABASES = {
         "HOST": "ec2-50-19-32-96.compute-1.amazonaws.com",
         "PORT": "5432",
     },
-    "backup": {
-        "ENGINE": "django.db.backends.postgresql",
-        "NAME": "d6hl343rgm5ngr",
-        "USER": "adsiplqhmnhvtv",
-        "PASSWORD": "7ddf32225217a38305353234b8e04c2649d322a2722a5a05256cc4fd23358d8c",
-        "HOST": "ec2-50-19-32-96.compute-1.amazonaws.com",
-        "PORT": "5432",
-    },
+    # "backup": {
+    #     "ENGINE": "django.db.backends.postgresql",
+    #     "NAME": "d6hl343rgm5ngr",
+    #     "USER": "adsiplqhmnhvtv",
+    #     "PASSWORD": "7ddf32225217a38305353234b8e04c2649d322a2722a5a05256cc4fd23358d8c",
+    #     "HOST": "ec2-50-19-32-96.compute-1.amazonaws.com",
+    #     "PORT": "5432",
+    # },
 }
 DATABASES["default"] = DATABASES["backup" if DEBUG else "production"]
 
