@@ -10,6 +10,12 @@ from notification.models import Notification
 
 
 class Recommendation(models.Model):
+    recommendation_status = [
+        ("pending", "Pending"),
+        ("accepted", "Accepted"),
+        ("rejected", "Rejected"),
+    ]
+
     title = models.CharField(max_length=255)
     description = models.TextField(blank=True, null=True)
     adviser = models.ForeignKey(Account, on_delete=models.CASCADE)
@@ -18,6 +24,7 @@ class Recommendation(models.Model):
     dateCreated = models.DateTimeField(auto_now_add=True)
     dateUpdated = models.DateTimeField(auto_now=True)
     isActive = models.BooleanField(default=True)
+    status = models.CharField(max_length=25, choices=recommendation_status, default="pending")
 
     class ActiveManager(models.Manager):
         def get_queryset(self):
@@ -31,6 +38,32 @@ class Recommendation(models.Model):
 
     def __str__(self):
         return self.title
+
+
+@receiver(post_save, sender=Recommendation)
+def notify_adviser_handler(created, instance, *args, **kwargs):
+
+    if instance.status == "accepted":
+        notif = Notification.objects.create(
+            sender=instance.institution.creator,
+            type="recommendation",
+            message="Your recommendation, %s of %s is accepted and publish!" % (instance.title, instance.file.name),
+            redirectID=instance.id,
+            receiver=instance.adviser,
+        )
+
+        notif.save()
+    if instance.status == "rejected":
+        notif = Notification.objects.create(
+            sender=instance.institution.creator,
+            type="recommendation",
+            message="Your recommendation, %s of %s is rejected by the institution moderator!"
+            % (instance.title, instance.file.name),
+            redirectID=instance.id,
+            receiver=instance.adviser,
+        )
+
+        notif.save()
 
 
 @receiver(post_save, sender=Recommendation)
@@ -64,8 +97,6 @@ def apply_NotifyStudent_handler(created, instance, *args, **kwargs):
 
             notif.save()
             print(x.id)
-        #
-        # breakpoint()
         pass
 
 

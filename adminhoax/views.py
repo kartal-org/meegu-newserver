@@ -85,14 +85,19 @@ def accountStaff(request):
 
 
 def accountAdd(request):
-    form = AddStaffAccount()
+    form = AddStaffAccount(initial={"is_staff": True})
     print("pass")
     if request.method == "POST":
+        # my_request = request.POST
+        # my_request.is_staff = True
+        # breakpoint()
         form = AddStaffAccount(request.POST)
         if form.is_valid():
             print("pass")
-            request.user.is_staff = True
+            # form.cleaned_data["is_staff"] = True
+            # request.user.is_staff = True
             print(form.cleaned_data)
+            # breakpoint()
             form.save()
             print("pass")
             return redirect("accounts_staff")

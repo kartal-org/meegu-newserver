@@ -17,10 +17,13 @@ class RecommendationList(generics.ListCreateAPIView):
         archive = self.request.query_params.get("archive")
         workspace = self.request.query_params.get("workspace")
         institution = self.request.query_params.get("institution")
+        status = self.request.query_params.get("status")
         queryset = Recommendation.active.all()
 
         if workspace is not None:
             queryset = queryset.filter(file__workspace__id=workspace)
+        if status is not None:
+            queryset = queryset.filter(status=status)
         if institution is not None:
             queryset = queryset.filter(institution__id=institution)
 

@@ -2,71 +2,88 @@
 
 <!DOCTYPE html>
 <html lang="en">
-    <head>
-        <meta charset="utf-8" />
-        <meta http-equiv="X-UA-Compatible" content="IE=edge" />
-        <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no" />
-        <meta name="description" content="" />
-        <meta name="author" content="" />
-        <title>Dashboard - SB Admin</title>
-        <link href="https://cdn.jsdelivr.net/npm/simple-datatables@latest/dist/style.css" rel="stylesheet" />
-        <link href="{% static 'css/styles.css' %}" rel="stylesheet" />
-        <script src="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.3/js/all.min.js" crossorigin="anonymous"></script>
-    </head>
-    <body class="sb-nav-fixed">
+	<head>
+		<meta charset="utf-8" />
+		<meta http-equiv="X-UA-Compatible" content="IE=edge" />
+		<meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no" />
+		<meta name="description" content="" />
+		<meta name="author" content="" />
+		<title>Dashboard - SB Admin</title>
+		<link
+			href="https://cdn.jsdelivr.net/npm/simple-datatables@latest/dist/style.css"
+			rel="stylesheet"
+		/>
+		<link href="{% static 'css/styles.css' %}" rel="stylesheet" />
+		<script
+			src="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.3/js/all.min.js"
+			crossorigin="anonymous"
+		></script>
+	</head>
+	<body class="sb-nav-fixed">
+		{% include 'adminhoax/header.html' %}
 
-        {%  include 'adminhoax/header.html'  %} 
+		<div id="layoutSidenav">
+			{% include 'adminhoax/sidebar.html' %}
 
-        <div id="layoutSidenav">
-
-            {%  include 'adminhoax/sidebar.html'  %} 
-            
-            <div id="layoutSidenav_content">
-                <main>
-                    <div class="container-fluid px-4">
-                        <h1 class="mt-4">Accounts</h1> 
-                        <div class="row">
-                            <div class="card mb-4">
-                                <div class="card-header">
-                                    <i class="fas fa-table me-1"></i>
-                                    Staff Create
-                                </div>
-                                <div class="card-body"> 
-                                    <form class="ui form" method="POST" action="">
-                                        {% csrf_token %}
-                                        Name: {{form.first_name}} {{form.last_name}}
-                                        <br><br>
-                                        Username: {{form.username}}
-                                        <br><br>
-                                        Email: {{form.email}}
-                                        <br><br>
-                                        Password: {{form.password1}}
-                                        <br><br> 
-                                        Password: {{form.password2}}
-                                        <br><br> 
-                                        <br><br>
-                                        <!-- Is Staff: {{form.is_staff}} -->
-                                        <!-- <br><br> 
+			<div id="layoutSidenav_content">
+				<main>
+					<div class="container-fluid px-4">
+						<h1 class="mt-4">Accounts</h1>
+						<div class="row">
+							<div class="card mb-4">
+								<div class="card-header">
+									<i class="fas fa-table me-1"></i>
+									Staff Create
+								</div>
+								<div class="card-body">
+									<form class="ui form" method="POST" action="">
+										{% csrf_token %} Name: {{form.first_name}} {{form.last_name}}
+										<br /><br />
+										Username: {{form.username}}
+										<br /><br />
+										Email: {{form.email}}
+										<br /><br />
+										Password: {{form.password1}}
+										<br /><br />
+										Password: {{form.password2}}
+										<br /><br />
+										<br /><br />
+										<p hidden>Is Staff: {{form.is_staff}}</p>
+										<!-- <br><br> 
                                         Is Active: {{form.is_active}} -->
-                                        <!-- {{form.as_p}} -->
-                                        <br><br>    
-                                        <br><br>
-                                        <input type="submit" class="btn btn-success" value="Submit"> 
-                                        <a href="http://127.0.0.1:8000/business/subscription/" class="btn btn-danger"> Cancel </a>
-                                    </form>  
-                                </div>
-                            </div>
-                        </div> 
-                    </div>
-                </main> 
-            </div>
-        </div>
-        <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.1.3/dist/js/bootstrap.bundle.min.js" crossorigin="anonymous"></script>
-        <script src="{% static 'js/scripts.js' %}"></script>
-        <script src="https://cdnjs.cloudflare.com/ajax/libs/Chart.js/2.8.0/Chart.min.js" crossorigin="anonymous"></script>
-        <script src="assets/demo/chart-area-demo.js"></script>
-        <script src="assets/demo/chart-bar-demo.js"></script>
-        <script src="https://cdn.jsdelivr.net/npm/simple-datatables@latest" crossorigin="anonymous"></script>
-        <script src="{% static 'js/datatables-simple-demo.js' %}"></script>
-    </body>
+										<!-- {{form.as_p}} -->
+										<br /><br />
+										<br /><br />
+										<input type="submit" class="btn btn-success" value="Submit" />
+										<a
+											href="http://127.0.0.1:8000/business/subscription/"
+											class="btn btn-danger"
+										>
+											Cancel
+										</a>
+									</form>
+								</div>
+							</div>
+						</div>
+					</div>
+				</main>
+			</div>
+		</div>
+		<script
+			src="https://cdn.jsdelivr.net/npm/bootstrap@5.1.3/dist/js/bootstrap.bundle.min.js"
+			crossorigin="anonymous"
+		></script>
+		<script src="{% static 'js/scripts.js' %}"></script>
+		<script
+			src="https://cdnjs.cloudflare.com/ajax/libs/Chart.js/2.8.0/Chart.min.js"
+			crossorigin="anonymous"
+		></script>
+		<script src="assets/demo/chart-area-demo.js"></script>
+		<script src="assets/demo/chart-bar-demo.js"></script>
+		<script
+			src="https://cdn.jsdelivr.net/npm/simple-datatables@latest"
+			crossorigin="anonymous"
+		></script>
+		<script src="{% static 'js/datatables-simple-demo.js' %}"></script>
+	</body>
 </html>

@@ -17,14 +17,17 @@ class AccountList(generics.ListCreateAPIView):
     renderer_classes = [CustomRenderer]
 
     def get_queryset(self):
-        queryset = Account.objects.all()
+        queryset = Account.objects.exclude(is_staff=True)
         type = self.request.query_params.get("type")
         name = self.request.query_params.get("name")
+        exclude = self.request.query_params.get("exclude")
 
         if name is not None:
             queryset = queryset.filter((Q(first_name__icontains=name) | Q(last_name__icontains=name)))
         if type is not None:
             queryset = queryset.filter(type=type)
+        if exclude is not None:
+            queryset = queryset.exclude(type=exclude)
         return queryset
 
 

@@ -11,19 +11,19 @@ class IsStorageAllowed(BasePermission):
             return True
 
         # breakpoint()
-        if request.data['recommendation'] is not None:
-            recommendation = Recommendation.objects.get(
-                pk=request.data['recommendation'])
-            file = recommendation.file.pdf
-            institution = recommendation.institution
-            print(file)
-            # breakpoint()
+        if "recommendation" in request.data:
+            recommendation = Recommendation.objects.get(pk=request.data["recommendation"])
+            if recommendation.file.pdf is not None:
+                file = recommendation.file.pdf
+                institution = recommendation.institution
+                print(file)
+                # breakpoint()
 
-            fileAddedSize = institution.storageUsed + file.size
+                fileAddedSize = institution.storageUsed + file.size
 
-            # breakpoint()
+                # breakpoint()
 
-            if fileAddedSize <= institution.storageLimit:
-                return True
-            return False
+                if fileAddedSize <= institution.storageLimit:
+                    return True
+                return False
         return True

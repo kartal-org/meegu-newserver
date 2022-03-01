@@ -58,30 +58,46 @@ class Review(models.Model):
     ]
     comment = models.TextField()
     rate = models.IntegerField()
-    user = models.OneToOneField(Account, on_delete=models.CASCADE)
+    user = models.ForeignKey(Account, on_delete=models.CASCADE)
     article = models.ForeignKey(Article, on_delete=models.CASCADE)
     dateCreated = models.DateTimeField(auto_now_add=True)
     dateUpdated = models.DateTimeField(auto_now=True)
 
     class Meta:
         ordering = ("-dateUpdated",)
-        unique_together = ["article", "user"]
+        unique_together = (
+            "user",
+            "article",
+        )
 
     def __str__(self):
         return "%s-%s %s" % (self.article.title, self.user.first_name, self.user.last_name)
 
 
 @receiver(post_save, sender=Article)
+def handleAcceptedRecommendation(created, instance, *args, **kwargs):
+
+    # breakpoint()
+    if instance.recommendation is not None:
+        recommendation = Recommendation.objects.get(id=instance.recommendation.id)
+        recommendation.status = "accepted"
+        recommendation.save()
+
+
+@receiver(post_save, sender=Article)
 def add_article_size(created, instance, *args, **kwargs):
 
-    if instance.recommendation:
-        fileSize = instance.recommendation.file.pdf.size
-        if fileSize:
-            print(fileSize)
-            institution = Institution.objects.get(pk=instance.institution.id)
-            institution.storageUsed = institution.storageUsed + fileSize
-            institution.save()
-    if instance.pdf:
+    # breakpoint()
+    if instance.recommendation is not None:
+        if instance.recommendation.file.pdf.name != "":
+            fileSize = instance.recommendation.file.pdf.size
+            if fileSize is not None:
+                print(fileSize)
+                institution = Institution.objects.get(pk=instance.institution.id)
+                institution.storageUsed = institution.storageUsed + fileSize
+                institution.save()
+
+    if instance.pdf.name:
         fileSize = instance.pdf.size
         institution = Institution.objects.get(pk=instance.institution.id)
         institution.storageUsed = institution.storageUsed + fileSize

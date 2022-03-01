@@ -49,12 +49,8 @@ class Account(AbstractBaseUser, PermissionsMixin):
     email = models.EmailField(_("email address"), unique=True)
     about = models.TextField(_("about"), max_length=500, blank=True)
     type = models.CharField(max_length=16, choices=TYPES, blank=True, null=True)
-    profileImage = models.ImageField(
-        _("ProfileImage"), upload_to=upload_to, default="userProfile/default_egry2i.jpg", blank=True, null=True
-    )
-    profileCover = models.ImageField(
-        _("ProfileCover"), upload_to=upload_to, default="userProfile/coverDefault_pdrisr.jpg", blank=True, null=True
-    )
+    profileImage = models.ImageField(_("ProfileImage"), upload_to=upload_to, blank=True, null=True)
+    profileCover = models.ImageField(_("ProfileCover"), upload_to=upload_to, blank=True, null=True)
     is_active = models.BooleanField(default=True)
     is_staff = models.BooleanField(default=False)
     is_verified = models.BooleanField(default=True)
@@ -67,7 +63,7 @@ class Account(AbstractBaseUser, PermissionsMixin):
     REQUIRED_FIELDS = ["username", "first_name", "last_name"]
 
     def __str__(self):
-        return self.username
+        return self.first_name
 
     @property
     def full_name(self):
