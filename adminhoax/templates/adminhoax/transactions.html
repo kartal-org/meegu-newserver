@@ -29,8 +29,8 @@
                             <div class="card mb-4">
                                 <div class="card-header">
                                     <i class="fas fa-table me-1"></i>
-                                    <a class="btn " role="button" href="http://127.0.0.1:8000/business/subscription/">Subscription Plans</a> 
-                                    <a class="btn  btn-outline-primary" role="button" href="http://127.0.0.1:8000/business/transaction/">Transactions</a> 
+                                    <a class="btn " role="button" href="{% url 'subscription' %}">Subscription Plans</a> 
+                                    <a class="btn  btn-outline-primary" role="button" href="{% url 'transaction' %}">Transactions</a> 
                                 </div> 
                                 <div class="card-body">
                                     <table id="datatablesSimple">

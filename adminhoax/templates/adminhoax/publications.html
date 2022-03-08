@@ -44,8 +44,7 @@
 												<th>Status</th>
 												<th>Recommendation</th>
 												<th>Institution</th> 
-												<th>Date Created</th>
-												<!-- <th>Action</th> -->
+												<th>Date Created</th> 
 											</tr>
 										</thead>
 										<tfoot>
@@ -55,8 +54,7 @@
 												<th>Status</th>
 												<th>Recommendation</th>
 												<th>Institution</th> 
-												<th>Date Created</th>
-												<th>Action</th>
+												<th>Date Created</th> 
 											</tr>
 										</tfoot>
 
@@ -68,8 +66,7 @@
 												<td>{{ article.status }}</td>
 												<td>{{ article.recommendation }}</td>
 												<td>{{ article.institution }}</td> 
-												<td>{{ article.dateCreated }}</td> 
-												<a href="{% url 'publications_delete_confirm' article.id %}" class="btn btn-sm btn-danger"> Delete </a>
+												<td>{{ article.dateCreated }}</td>  
 											</tr>
 											{% endfor %}
 										</tbody>

@@ -3,7 +3,7 @@
 		<div class="sb-sidenav-menu">
 			<div class="nav">
 				<div class="sb-sidenav-menu-heading">Core</div>
-				<a class="nav-link" href="http://127.0.0.1:8000/business/dashboard/">
+				<a class="nav-link" href="{% url 'dashboard' %}">
 					<div class="sb-nav-link-icon"><i class="fas fa-tachometer-alt"></i></div>
 					Dashboard
 				</a>
@@ -27,11 +27,11 @@
 					data-bs-parent="#sidenavAccordion"
 				>
 					<nav class="sb-sidenav-menu-nested nav">
-						<a class="nav-link" href="http://127.0.0.1:8000/business/account/">Accounts</a>
-						<a class="nav-link" href="http://127.0.0.1:8000/business/classroom/"
+						<a class="nav-link" href="{% url 'account' %}">Accounts</a>
+						<a class="nav-link" href="{% url 'classroom' %}"
 							>Classrooms</a
 						>
-						<a class="nav-link" href="http://127.0.0.1:8000/business/institution/"
+						<a class="nav-link" href="{% url 'institution' %}"
 							>Institutions</a
 						>
 					</nav>
@@ -55,10 +55,10 @@
 					data-bs-parent="#sidenavAccordion"
 				>
 					<nav class="sb-sidenav-menu-nested nav accordion" id="sidenavAccordionPages">
-						<a class="nav-link" href="http://127.0.0.1:8000/business/subscription/"
+						<a class="nav-link" href="{% url 'subscription' %}"
 							>Subscriptions</a
 						>
-						<a class="nav-link" href="http://127.0.0.1:8000/business/publication/"
+						<a class="nav-link" href="{% url 'publication' %}"
 							>Publications</a
 						>
 					</nav>

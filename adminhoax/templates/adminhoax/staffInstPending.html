@@ -36,19 +36,19 @@
 									<a
 										class="btn btn-outline-primary"
 										role="button"
-										href="http://127.0.0.1:8000/business/staff_institution_pending/"
+										href="{% url 'staffInstitutionPending' %}"
 										>Pending</a
 									>
 									<a
 										class="btn"
 										role="button"
-										href="http://127.0.0.1:8000/business/staff_institution_approved/"
+										href="{% url 'staffInstitutionApproved' %}"
 										>Approved</a
 									>
 									<a
 										class="btn"
 										role="button"
-										href="http://127.0.0.1:8000/business/staff_institution_disapproved/"
+										href="{% url 'staffInstitutionDisapproved' %}"
 										>Disapproved</a
 									>
 								</div>

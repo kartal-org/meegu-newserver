@@ -35,7 +35,7 @@
 								class="btn btn-primary"
 								role="button"
 								class="btn btn-primary"
-								href="http://127.0.0.1:8000/business/subscriptions_add/"
+								href="{% url 'subscriptions_add' %}"
 								>ADD</a
 							>
 						</h1>
@@ -46,13 +46,13 @@
 									<a
 										class="btn btn-outline-primary"
 										role="button"
-										href="http://127.0.0.1:8000/business/subscription/"
+										href="{% url 'subscription' %}"
 										>Subscription Plans</a
 									>
 									<a
 										class="btn"
 										role="button"
-										href="http://127.0.0.1:8000/business/transaction/"
+										href="{% url 'transaction' %}"
 										>Transactions</a
 									>
 								</div>

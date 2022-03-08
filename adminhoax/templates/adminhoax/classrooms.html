@@ -44,8 +44,7 @@
 												<th>Adviser</th>
 												<th>Institution</th> 
 												<th>Active</th>
-												<th>Date Created</th>
-												<!-- <th>Action</th> -->
+												<th>Date Created</th> 
 											</tr>
 										</thead>
 										<tfoot>
@@ -55,8 +54,7 @@
 												<th>Adviser</th>
 												<th>Institution</th> 
 												<th>Active</th>
-												<th>Date Created</th>
-												<th>Action</th>
+												<th>Date Created</th> 
 											</tr>
 										</tfoot>
 
@@ -68,15 +66,7 @@
 												<td>{{ recommendation.adviser }}</td>
 												<td>{{ recommendation.institution }}</td> 
 												<td>{{ recommendation.isActive }}</td>
-												<td>{{ recommendation.dateCreated }}</td>
-												<td>
-													<a
-														href="{% url 'classrooms_delete_confirm' recommendation.id %}"
-														class="btn btn-sm btn-danger"
-													>
-														Delete
-													</a>
-												</td>
+												<td>{{ recommendation.dateCreated }}</td> 
 											</tr>
 											{% endfor %}
 										</tbody>
