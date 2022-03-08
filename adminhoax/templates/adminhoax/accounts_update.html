@@ -41,37 +41,26 @@
 										<br />
 										<div class="card card-body">
 											<h5 class="card-title">
-												First Name: {{ update_user.first_name }}
-											</h5>
-											<h5 class="card-title">Last Name: {{ update_user.last_name }}</h5>
-											<!-- <br>
-                                            Username: {{ update_user.username }}
-                                            <br>
-                                            Email: {{ update_user.isActive }}
-                                            <br>
-                                            Active: {{ plupdate_useran.price }}
-                                            <br> 
-                                            Verified: {{ update_user.storageLimit }}  -->
+												Name: {{ update_user.first_name }} {{ update_user.last_name }}
+											</h5> 
 											<br /><br />
 											<form action="" method="post">
-												{% csrf_token %}
-												<!-- {{ form }} -->
-												Username: {{ form.username }}
+												{% csrf_token %} 
+												<!-- Username: {{ form.username }}
 												<br />
-												Password: {{ form.password }}
+												Password: {{ form.password1 }}
 												<br />
 												Email: {{ form.email }}
 												<br />
 												Active: {{ form.is_active }}
 												<br />
 												Verified: {{ form.is_verified }}
-												<br />
-												<!-- Permisions: {{ form.groups }} -->
-												<!-- Permisions: {{ form }} -->
+												<br />  -->
+												{{ form.as_p }}
 												<br /><br /><br />
 												<input type="submit" value="Submit" class="btn btn-success" />
 												<a
-													href="http://127.0.0.1:8000/business/account/"
+													href="{% url 'accounts_staff' %}"
 													class="btn btn-danger"
 												>
 													Cancel

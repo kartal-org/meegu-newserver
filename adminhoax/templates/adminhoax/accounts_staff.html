@@ -35,24 +35,25 @@
 								class="btn btn-primary"
 								role="button"
 								class="btn btn-primary"
-								href="http://127.0.0.1:8000/business/accounts_add/"
+								href="{% url 'accounts_add' %}"
 								>ADD</a
 							>
 						</h1>
 						<div class="row">
 							<div class="card mb-4">
-								<div class="card-header">
+								<div class="card-header"> 
 									<i class="fas fa-table me-1"></i>
+
 									<a
 										class="btn"
 										role="button"
-										href="http://127.0.0.1:8000/business/account/"
+										href="{% url 'account' %}"
 										>Users</a
 									>
 									<a
 										class="btn btn-outline-primary"
 										role="button"
-										href="http://127.0.0.1:8000/business/accounts_staff/"
+										href="{% url 'accounts_staff' %}"
 										>Staffs</a
 									>
 								</div>

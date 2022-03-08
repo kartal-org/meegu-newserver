@@ -85,26 +85,15 @@ def accountStaff(request):
 
 
 def accountAdd(request):
-    form = AddStaffAccount(initial={"is_staff": True})
-    print("pass")
-    if request.method == "POST":
-        # my_request = request.POST
-        # my_request.is_staff = True
-        # breakpoint()
+    form = AddStaffAccount(initial={"is_staff": True}) 
+    if request.method == "POST": 
         form = AddStaffAccount(request.POST)
-        if form.is_valid():
-            print("pass")
-            # form.cleaned_data["is_staff"] = True
-            # request.user.is_staff = True
-            print(form.cleaned_data)
-            # breakpoint()
-            form.save()
-            print("pass")
+        if form.is_valid(): 
+            form.save() 
             return redirect("accounts_staff")
 
     contain = {
-        "form": form,
-        #'permgroups':permgroups,
+        "form": form, 
     }
     return render(request, "adminhoax/accounts_add.html", contain)
 
@@ -129,12 +118,11 @@ def accountUpdate(request, pk):
             print("error")
 
             form.save()
-            return redirect("account")
+            return redirect("accounts_staff")
 
     contain = {
         "update_user": update_user,
-        "form": form,
-        #'permgroups':permgroups,
+        "form": form, 
     }
 
     return render(request, "adminhoax/accounts_update.html", contain)

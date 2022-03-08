@@ -47,9 +47,9 @@
                                         <br><br>
                                         Storage Limit: {{form.storageLimit}}
                                         <br><br>    
-                                        Image: {{form.image}}
+                                        <!-- Image: {{form.image}} -->
                                         <input type="submit" class="btn btn-success" value="Submit"> 
-                                        <a href="http://127.0.0.1:8000/business/subscription/" class="btn btn-danger"> Cancel </a>
+                                        <a href="{% url 'subscription' %}" class="btn btn-danger"> Cancel </a>
                                     </form>  
                                 </div>
                             </div>

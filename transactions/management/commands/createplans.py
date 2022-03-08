@@ -11,17 +11,17 @@ class Command(BaseCommand):
             name="Institution Basic",
             description="Get your Free 5GB of storage for your institution's publications and resources",
             price=0.00,
-            storageLimit=5000000000,
+            storageLimit=5000000,
         )
         SubscriptionPlan.objects.create(
             name="Institution Upgrade 1",
             description="Get another 5GB of storage for your institution's publications and resources",
             price=50.00,
-            storageLimit=5000000000,
+            storageLimit=5000000,
         )
         SubscriptionPlan.objects.create(
             name="Institution Upgrade 2",
             description="Get another 15GB of storage for your institution's publications and resources",
             price=100.00,
-            storageLimit=15000000000,
+            storageLimit=1500000,
         )
