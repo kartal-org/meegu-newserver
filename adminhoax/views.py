@@ -15,6 +15,8 @@ from django.contrib import messages
 from django.contrib.auth.decorators import login_required
 from django.contrib.auth.models import Group
 from django.contrib.auth.decorators import user_passes_test
+from django.contrib.auth import update_session_auth_hash
+from django.contrib.auth.forms import PasswordChangeForm
 
 # Create your views here.
 def loginPage(request):
@@ -89,7 +91,13 @@ def accountAdd(request):
     if request.method == "POST": 
         form = AddStaffAccount(request.POST)
         if form.is_valid(): 
-            form.save() 
+            print("pass")
+            # form.cleaned_data["is_staff"] = True
+            # request.user.is_staff = True
+            print(form.cleaned_data)
+            # breakpoint()
+            form.save()
+            print("pass")
             return redirect("accounts_staff")
 
     contain = {
@@ -113,9 +121,13 @@ def accountUpdate(request, pk):
 
     if request.method == "POST":
         form = UpdateAccount(request.POST, instance=update_user)
+        formpass = PasswordChangeForm(request.user, request.POST)
         print("error")
         if form.is_valid():
             print("error")
+            
+            # user = formpass.save()
+            # update_session_auth_hash(request, user)  # Important!
 
             form.save()
             return redirect("accounts_staff")
@@ -123,6 +135,7 @@ def accountUpdate(request, pk):
     contain = {
         "update_user": update_user,
         "form": form, 
+        "formpass": formpass, 
     }
 
     return render(request, "adminhoax/accounts_update.html", contain)

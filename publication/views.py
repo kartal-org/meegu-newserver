@@ -21,10 +21,8 @@ class ArticleList(generics.ListCreateAPIView):
         # ratings = Review.objects.filter(article=OuterRef("pk"))
         # breakpoint()
 
-        queryset = (
-            Article.objects.annotate(review_avg=Avg("review__rate"))
-            .annotate(review_count=Count("review"))
-            .order_by("-review_avg", "-review_count")
+        queryset = Article.objects.annotate(relevantScore=Avg("review__rate") + Count("review")).order_by(
+            "-relevantScore"
         )
 
         status = self.request.query_params.get("status")

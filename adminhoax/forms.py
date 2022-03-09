@@ -17,7 +17,7 @@ class InstitutionVerifyForm(ModelForm):
 class UpdateAccount(ModelForm):
     class Meta:
         model = Account
-        fields = ["first_name", "last_name", "username", "email", "is_staff"]
+        fields = ["first_name", "last_name", "username", "email", "password", "is_staff"]
 
 
 class AddStaffAccount(UserCreationForm):

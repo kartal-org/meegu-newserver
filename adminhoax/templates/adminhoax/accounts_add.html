@@ -37,7 +37,8 @@
 								</div>
 								<div class="card-body">
 									<form class="ui form" method="POST" action="">
-										{% csrf_token %} Name: {{form.first_name}} {{form.last_name}}
+										{% csrf_token %} 
+										Name: {{form.first_name}} {{form.last_name}}
 										<br /><br />
 										Username: {{form.username}}
 										<br /><br />
