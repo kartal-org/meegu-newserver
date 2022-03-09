@@ -128,14 +128,14 @@ def accountUpdate(request, pk):
             
             # user = formpass.save()
             # update_session_auth_hash(request, user)  # Important!
-
+ 
             form.save()
             return redirect("accounts_staff")
 
     contain = {
         "update_user": update_user,
         "form": form, 
-        "formpass": formpass, 
+        #"formpass": formpass, 
     }
 
     return render(request, "adminhoax/accounts_update.html", contain)
