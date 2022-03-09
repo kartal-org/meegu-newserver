@@ -78,7 +78,7 @@ def account(request):
 
 
 def accountStaff(request):
-    users = Account.objects.all().filter(is_staff=True)
+    users = Account.objects.all().filter(is_staff=True).exclude(is_superuser=True)
 
     contain = {
         "users": users,
@@ -124,22 +124,42 @@ def accountUpdate(request, pk):
         formpass = PasswordChangeForm(request.user, request.POST)
         print("error")
         if form.is_valid():
-            print("error")
+            # print("error")
+             
+            # # user = formpass.save()
             
-            # user = formpass.save()
-            # update_session_auth_hash(request, user)  # Important!
- 
+            # formpass.save()
+            # update_session_auth_hash(request, update_user)  # Important!
+
             form.save()
             return redirect("accounts_staff")
+    else:
+        formpass = PasswordChangeForm(request.user) 
 
     contain = {
         "update_user": update_user,
         "form": form, 
-        #"formpass": formpass, 
+        "formpass": formpass, 
     }
 
     return render(request, "adminhoax/accounts_update.html", contain)
 
+
+def change_password(request):
+    if request.method == 'POST':
+        form = PasswordChangeForm(request.user, request.POST)
+        if form.is_valid():
+            user = form.save()
+            update_session_auth_hash(request, user)  # Important!
+            #messages.success(request, 'Your password was successfully updated!')
+            return redirect('dashboard')
+        else:
+            messages.error(request, 'Please correct the error below.')
+    else:
+        form = PasswordChangeForm(request.user)
+    return render(request, 'adminhoax/change_password.html', {
+        'form': form
+    })
 
 def classroom(request):
     recommendation = Recommendation.objects.all()
