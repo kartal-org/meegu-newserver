@@ -56,7 +56,7 @@ class Review(models.Model):
         (4, "Very Good"),
         (5, "Excellent"),
     ]
-    comment = models.TextField()
+    # comment = models.TextField()
     rate = models.IntegerField()
     user = models.ForeignKey(Account, on_delete=models.CASCADE)
     article = models.ForeignKey(Article, on_delete=models.CASCADE)
