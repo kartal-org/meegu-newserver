@@ -13,10 +13,11 @@ from adminhoax.forms import *
 from django.contrib.auth import authenticate, login, logout
 from django.contrib import messages
 from django.contrib.auth.decorators import login_required
-from django.contrib.auth.models import Group
+from django.contrib.auth.models import Group 
 from django.contrib.auth.decorators import user_passes_test
 from django.contrib.auth import update_session_auth_hash
 from django.contrib.auth.forms import PasswordChangeForm
+from django.http import HttpResponse 
 
 # Create your views here.
 def loginPage(request):
@@ -29,9 +30,9 @@ def loginPage(request):
 
         if user is not None:
             login(request, user)
-            if request.user.is_superuser:
+            if request.user.groups.filter(name='admin').exists():
                 return redirect("dashboard")
-            elif request.user.is_staff and request.user.is_active:
+            elif request.user.groups.filter(name='staff').exists() and request.user.is_active:
                 print(user.email, user.password)
                 return redirect("staffInstitutionPending")
             else:
@@ -78,16 +79,27 @@ def account(request):
 
 
 def accountStaff(request):
-    users = Account.objects.all().filter(is_staff=True).exclude(is_superuser=True)
+    users = Account.objects.all().filter(is_staff=True)
+    group = Group.objects.all()
+
+    ugroup = [] 
+    for i in users.all():
+        #ugroup.append(i.name)
+        print(i.groups)
+        breakpoint()
+
 
     contain = {
         "users": users,
+        "group": group,
     }
     return render(request, "adminhoax/accounts_staff.html", contain)
 
 
 def accountAdd(request):
     form = AddStaffAccount(initial={"is_staff": True}) 
+    group = Group.objects.all().order_by("id")
+
     if request.method == "POST": 
         form = AddStaffAccount(request.POST)
         if form.is_valid(): 
@@ -96,12 +108,23 @@ def accountAdd(request):
             # request.user.is_staff = True
             print(form.cleaned_data)
             # breakpoint()
+            
             form.save()
+
+            gname = request.POST.get("gname")
+            email = request.POST.get("email")
+            # ugroup, __ = Group.objects.get_or_create(name=gname)
+            print(gname)
+            user = Account.objects.get(email=email)  
+            ugroup = Group.objects.get(name=gname) 
+            ugroup.user_set.add(user)
             print("pass")
+
             return redirect("accounts_staff")
 
     contain = {
         "form": form, 
+        "group": group, 
     }
     return render(request, "adminhoax/accounts_add.html", contain)
 
@@ -118,28 +141,39 @@ def accountDelete(request, pk):
 def accountUpdate(request, pk):
     update_user = Account.objects.get(id=pk)
     form = UpdateAccount(instance=update_user)
+    group = Group.objects.all()
+
+    uugroup = []
+    for i in update_user.groups.all():
+        uugroup.append(i.name)
 
     if request.method == "POST":
-        form = UpdateAccount(request.POST, instance=update_user)
-        formpass = PasswordChangeForm(request.user, request.POST)
+        form = UpdateAccount(request.POST, instance=update_user) 
         print("error")
-        if form.is_valid():
-            # print("error")
-             
-            # # user = formpass.save()
-            
-            # formpass.save()
-            # update_session_auth_hash(request, update_user)  # Important!
+        if form.is_valid(): 
 
             form.save()
-            return redirect("accounts_staff")
-    else:
-        formpass = PasswordChangeForm(request.user) 
+
+            gname = request.POST.get("gname")
+            # ugroup, __ = Group.objects.get_or_create(name=gname)
+            print(gname)
+            user = Account.objects.get(id=pk) 
+            user.groups.clear()
+            ugroup = Group.objects.get(name=gname) 
+            ugroup.user_set.add(user)
+
+            # user = Account.objects.get(id=pk)
+            # user.groups.add(ugroup)
+            #grouptype
+
+            return redirect("accounts_staff") 
 
     contain = {
         "update_user": update_user,
-        "form": form, 
-        "formpass": formpass, 
+        "form": form,  
+        "group": group,   
+        "uugroup": uugroup,
+        
     }
 
     return render(request, "adminhoax/accounts_update.html", contain)
