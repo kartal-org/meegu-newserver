@@ -32,8 +32,8 @@ class Article(models.Model):
     dateCreated = models.DateTimeField(auto_now_add=True)
     dateUpdated = models.DateTimeField(auto_now=True)
 
-    class Meta:
-        ordering = ("-dateUpdated",)
+    # class Meta:
+    #     ordering = ("-dateUpdated",)
 
     @property
     def rating(self):
