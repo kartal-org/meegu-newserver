@@ -1,4 +1,4 @@
-from rest_framework import generics, permissions
+from rest_framework import generics, permissions, status, response
 from .models import *
 from .serializers import *
 from rest_framework.parsers import MultiPartParser, FormParser
@@ -69,3 +69,8 @@ class ReviewDetail(generics.RetrieveUpdateDestroyAPIView):
     permission_classes = [permissions.IsAuthenticated]
     queryset = Review.objects.all()
     serializer_class = ReviewSerializer
+
+    def destroy(self, *args, **kwargs):
+        serializer = self.get_serializer(self.get_object())
+        super().destroy(*args, **kwargs)
+        return response.Response(serializer.data, status=status.HTTP_200_OK)
