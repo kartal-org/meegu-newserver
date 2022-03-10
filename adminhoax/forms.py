@@ -17,13 +17,13 @@ class InstitutionVerifyForm(ModelForm):
 class UpdateAccount(ModelForm):
     class Meta:
         model = Account
-        fields = ["first_name", "last_name", "username", "email", "is_staff", "is_active"]
+        fields = ["first_name", "last_name", "username", "email", "is_active"]
 
 
 class AddStaffAccount(UserCreationForm):
     class Meta:
         model = Account
-        # fields = '__all__'
+        #fields = '__all__'
         fields = ["first_name", "last_name", "username", "email", "password1", "password2", "is_staff"]
 
 

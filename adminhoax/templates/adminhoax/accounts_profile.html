@@ -33,43 +33,42 @@
 							<div class="card mb-4">
 								<div class="card-header">
 									<i class="fas fa-table me-1"></i>
-									Staff Create
+									Account Update
 								</div>
-								<div class="card-body">
-									<form class="ui form" method="POST" action="">
-										{% csrf_token %} 
-										Name: {{form.first_name}} {{form.last_name}}
-										<br /><br />
-										Username: {{form.username}}
-										<br /><br />
-										Email: {{form.email}}
-										<br /><br />
-										Password: {{form.password1}}
-										<br /><br />
-										Password: {{form.password2}}
-										<br /><br />
-										<br /><br />
-										<p hidden>Is Staff: {{form.is_staff}}</p>
-										<!-- <br><br> 
-                                        Is Active: {{form.is_active}} -->
-										<!-- {{form.as_p}} -->
-										Type: 
-										<select name="gname" id="gname">
-											<!-- <option hidden="">None</option> -->
-											{% for group in group %}  
-												<option value="{{group.name}}"> {{group.name}}</option>
-											{% endfor %} 
-										</select>
-										<br /><br />
-										<br /><br />
-										<input type="submit" class="btn btn-success" value="Submit" />
-										<a
-											href="{% url 'accounts_staff' %}"
-											class="btn btn-danger"
-										>
-											Cancel
-										</a>
-									</form>
+								<div class="card-body row">
+									<br />
+									<div class="col-md-3 card-body">
+										<br />
+										<div class="card card-body">
+											<h5 class="card-title">
+												Name: {{ update_user.first_name }} {{ update_user.last_name }}
+											</h5> 
+											<br /><br />
+											<form action="" method="post">
+												{% csrf_token %} 
+												<!-- Username: {{ form.username }}
+												<br />
+												Password: {{ form.password1 }}
+												<br />
+												Email: {{ form.email }}
+												<br />
+												Active: {{ form.is_active }}
+												<br />
+												Verified: {{ form.is_verified }}
+												<br />  -->
+												{{ form.as_p }}
+												<!-- {{ formpass.as_p }} -->
+												<br /><br /><br />
+												<input type="submit" value="Submit" class="btn btn-success" />
+												<a
+													href="{% url 'accounts_staff' %}"
+													class="btn btn-danger"
+												>
+													Cancel
+												</a>
+											</form>
+										</div>
+									</div>
 								</div>
 							</div>
 						</div>

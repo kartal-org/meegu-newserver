@@ -93,8 +93,8 @@
 												<td>{{ users.first_name }}</td>
 												<td>{{ users.last_name }}</td>
 												<td>{{ users.username }}</td>
-												<td>{{ users.email }}</td>
-												<td>{{ users.type }}</td>
+												<td>{{ users.email }}</td> 
+												<td>{{ users.group.name }}</td> 
 												<td>{{ users.is_active }}</td>
 												<!-- <td>  
                                                     {{ users.groups.name }}
@@ -112,7 +112,7 @@
 														class="btn btn-sm btn-primary"
 														>Update</a
 													>
-													<!-- <a href="{% url 'accounts_delete_confirm' users.id %}" class="btn btn-sm btn-danger"> Delete </a> -->
+													<!-- <a href="#" class="btn btn-sm btn-danger"> Delete </a> -->
 												</td>
 											</tr>
 											{% endfor %}

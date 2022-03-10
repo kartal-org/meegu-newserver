@@ -43,7 +43,7 @@
 											<h5 class="card-title">
 												Name: {{ update_user.first_name }} {{ update_user.last_name }}
 											</h5> 
-											<br /><br />
+											<br />
 											<form action="" method="post">
 												{% csrf_token %} 
 												<!-- Username: {{ form.username }}
@@ -58,6 +58,33 @@
 												<br />  -->
 												{{ form.as_p }}
 												<!-- {{ formpass.as_p }} -->
+												
+												
+												<!-- {% for uugroup in uugroup %}  
+													Current Type: {{uugroup}}
+												{% endfor %} -->
+												<br /><br />
+												Type: 
+												<select name="gname" id="gname">
+													{% for uugroup in uugroup %} 
+														<option hidden="">{{uugroup}}</option> 
+													{% endfor %}
+													{% for group in group %}  
+														<option value="{{group.name}}"> {{group.name}}</option>
+													{% endfor %} 
+												</select>
+												<!-- <div class="dropdown">
+													{% for ugroup in ugroup %}  
+														<button class="btn btn-secondary dropdown-toggle" type="button" id="dropdownMenuButton" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+															{{ugroup}}
+														</button>
+													{% endfor %}
+													<div class="dropdown-menu" aria-labelledby="dropdownMenuButton">
+														{% for group in group %}  
+															<option value="{{group.name}}"> {{group.name}}</option>
+														{% endfor %} 
+													</div>
+												</div> -->
 												<br /><br /><br />
 												<input type="submit" value="Submit" class="btn btn-success" />
 												<a
