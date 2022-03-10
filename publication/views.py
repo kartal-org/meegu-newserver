@@ -5,10 +5,11 @@ from rest_framework.parsers import MultiPartParser, FormParser
 from rest_framework import filters
 from .permissions import *
 from django.db.models import Avg, Count
+from django.db.models import Case, Value, When, F
 
 
 class ArticleList(generics.ListCreateAPIView):
-    permission_classes = [permissions.IsAuthenticated]
+    # permission_classes = [permissions.IsAuthenticated]
     parser_classes = [MultiPartParser, FormParser]
     serializer_class = ArticleSerializer
     filter_backends = [filters.SearchFilter]
@@ -21,7 +22,14 @@ class ArticleList(generics.ListCreateAPIView):
         # ratings = Review.objects.filter(article=OuterRef("pk"))
         # breakpoint()
 
-        queryset = Article.objects.annotate(review_avg=Avg("review__rate")).order_by("review_avg")
+        queryset = (
+            Article.objects.alias(review_avg1=Avg("review__rate"))
+            .annotate(
+                result=Case(When(review_avg1=None, then=Value(0.00)), When(review_avg1__gt=0, then=F("review_avg1")))
+            )
+            .order_by("-result")
+        )
+        # breakpoint()
 
         status = self.request.query_params.get("status")
         institution = self.request.query_params.get("institution")
