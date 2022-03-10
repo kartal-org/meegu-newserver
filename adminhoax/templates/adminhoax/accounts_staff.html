@@ -92,15 +92,7 @@
 												<td>{{ users.email }}</td>
 												<td>{{ users.groups.all.0 }}</td>
 												<td>{{ users.is_active }}</td>
-												<!-- <td>  
-                                                    {{ users.groups.name }}
-                                                     {% for permgroups in permgroups %} 
-                                                    {{ permgroups.groups.name }} 
-                                                    {% endfor %} -->
-												<!-- {% for permgroups  in permgroups %}
-                                                        {{ permgroups.groups.name }}
-                                                    {% endfor %} 
-                                                </td>  -->
+
 												<td>{{ users.dateCreated }}</td>
 												<td>
 													<a
@@ -108,7 +100,6 @@
 														class="btn btn-sm btn-primary"
 														>Update</a
 													>
-													<!-- <a href="#" class="btn btn-sm btn-danger"> Delete </a> -->
 												</td>
 											</tr>
 											{% endfor %}
