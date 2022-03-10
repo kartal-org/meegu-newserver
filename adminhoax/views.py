@@ -58,12 +58,16 @@ def home(request):
     articlesCount = Article.objects.count()
     transactionCount = Transaction.objects.count()
 
+    user = Account.objects.get(id=request.user.id)
+
     contain = {
         "logs": logs,
         "accountCount": accountCount,
         "instituionsCount": instituionsCount,
         "articlesCount": articlesCount,
         "transactionCount": transactionCount,
+
+        "user": user,
     }
 
     return render(request, "adminhoax/index.html", contain)
