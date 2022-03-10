@@ -80,20 +80,9 @@ def account(request):
 
 def accountStaff(request):
     users = Account.objects.all().filter(is_staff=True)
-    group = Group.objects.all()
-
-    ugroup = []
-    for i in users.all():
-        # ugroup.append(i.name)
-        if i.groups is not None:
-            for x in i.groups.all():
-                print(x)
-                ugroup.append(x)
-                breakpoint()
 
     contain = {
         "users": users,
-        "group": group,
     }
     return render(request, "adminhoax/accounts_staff.html", contain)
 

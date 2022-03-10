@@ -41,15 +41,10 @@
 						</h1>
 						<div class="row">
 							<div class="card mb-4">
-								<div class="card-header"> 
+								<div class="card-header">
 									<i class="fas fa-table me-1"></i>
 
-									<a
-										class="btn"
-										role="button"
-										href="{% url 'account' %}"
-										>Users</a
-									>
+									<a class="btn" role="button" href="{% url 'account' %}">Users</a>
 									<a
 										class="btn btn-outline-primary"
 										role="button"
@@ -88,13 +83,14 @@
 
 										<tbody>
 											{% for users in users %}
+
 											<tr>
 												<td>{{ users.id }}</td>
 												<td>{{ users.first_name }}</td>
 												<td>{{ users.last_name }}</td>
 												<td>{{ users.username }}</td>
-												<td>{{ users.email }}</td> 
-												<td>{{ users.group.name }}</td> 
+												<td>{{ users.email }}</td>
+												<td>{{ users.groups.all.0 }}</td>
 												<td>{{ users.is_active }}</td>
 												<!-- <td>  
                                                     {{ users.groups.name }}
